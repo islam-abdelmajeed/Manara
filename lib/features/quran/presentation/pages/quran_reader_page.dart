@@ -68,7 +68,9 @@ class QuranReaderView extends StatelessWidget {
                 selectedIndex: state.tab.index,
                 onChanged: (i) => cubit.selectTab(ReaderTab.values[i]),
               ),
-              SizedBox(height: context.isMobile ? AppSpacing.md : 45),
+              SizedBox(
+                height: context.isMobile ? AppSpacing.sm : AppSpacing.md,
+              ),
               Expanded(
                 child: context.isDesktop
                     ? _DesktopLayout(state: state)

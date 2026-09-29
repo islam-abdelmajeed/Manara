@@ -76,9 +76,9 @@ class _ReadingContent extends StatelessWidget {
 
   double _baseFontSize(BuildContext context) {
     return switch (context.deviceType) {
-      DeviceType.mobile => 26,
-      DeviceType.tablet => 30,
-      DeviceType.desktop => 36,
+      DeviceType.mobile => 23,
+      DeviceType.tablet => 27,
+      DeviceType.desktop => 32,
     };
   }
 
