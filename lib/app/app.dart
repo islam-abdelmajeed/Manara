@@ -10,9 +10,8 @@ class ManaraApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(design): replace designSize with the Figma mobile frame size.
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(390, 844),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, _) => MaterialApp.router(

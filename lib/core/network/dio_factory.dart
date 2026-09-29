@@ -9,10 +9,7 @@ abstract final class DioFactory {
         baseUrl: AppConstants.baseUrl,
         connectTimeout: AppConstants.connectTimeout,
         receiveTimeout: AppConstants.receiveTimeout,
-        headers: const {
-          'Accept': 'application/json',
-          'Accept-Language': 'ar',
-        },
+        headers: const {'Accept': 'application/json', 'Accept-Language': 'ar'},
       ),
     );
 
