@@ -31,6 +31,7 @@ class ReaderPreferencesLocalDataSourceImpl
   static const _lastPage = 'reader.lastPage';
   static const _recent = 'reader.recent';
   static const _bookmarks = 'reader.bookmarks';
+  static const _days = 'reader.days';
 
   @override
   ReaderSettings readSettings() {
@@ -76,6 +77,10 @@ class ReaderPreferencesLocalDataSourceImpl
       lastPage: _prefs.getInt(_lastPage) ?? 1,
       recentPages: _intList(_recent),
       bookmarkedPages: _intList(_bookmarks),
+      readingDays: [
+        for (final raw in _prefs.getStringList(_days) ?? const <String>[])
+          ?DateTime.tryParse(raw),
+      ],
     );
   }
 
@@ -87,8 +92,15 @@ class ReaderPreferencesLocalDataSourceImpl
       _prefs.setStringList(_bookmarks, [
         for (final n in p.bookmarkedPages) '$n',
       ]),
+      _prefs.setStringList(_days, [for (final d in p.readingDays) _date(d)]),
     ]);
   }
+
+  /// `yyyy-MM-dd`, which [DateTime.tryParse] reads back as local midnight.
+  static String _date(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-'
+      '${d.month.toString().padLeft(2, '0')}-'
+      '${d.day.toString().padLeft(2, '0')}';
 
   List<int> _intList(String key) {
     return [

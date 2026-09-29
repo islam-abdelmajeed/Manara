@@ -1,3 +1,4 @@
+import 'package:manara/features/quran/domain/entities/mushaf_page.dart';
 import 'package:manara/features/quran/domain/entities/surah.dart';
 
 /// Arabic labels used by the reader UI.
@@ -24,9 +25,5 @@ abstract final class QuranLabels {
   }
 
   /// First Mushaf page of each juz (Madani Mushaf, 604 pages).
-  static const List<int> juzStartPages = [
-    1, 22, 42, 62, 82, 102, 122, 142, 162, 182, //
-    202, 222, 242, 262, 282, 302, 322, 342, 362, 382,
-    402, 422, 442, 462, 482, 502, 522, 542, 562, 582,
-  ];
+  static const List<int> juzStartPages = MushafPage.juzStartPages;
 }

@@ -14,6 +14,26 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:manara/core/di/register_module.dart' as _i530;
+import 'package:manara/features/hadith/data/datasources/daily_hadith_local_data_source.dart'
+    as _i970;
+import 'package:manara/features/hadith/data/repositories/hadith_repository_impl.dart'
+    as _i949;
+import 'package:manara/features/hadith/domain/repositories/hadith_repository.dart'
+    as _i146;
+import 'package:manara/features/hadith/domain/usecases/get_hadith_of_the_day.dart'
+    as _i1;
+import 'package:manara/features/home/presentation/cubit/home_cubit.dart'
+    as _i757;
+import 'package:manara/features/prayer/data/datasources/prayer_times_remote_data_source.dart'
+    as _i945;
+import 'package:manara/features/prayer/data/repositories/prayer_times_repository_impl.dart'
+    as _i598;
+import 'package:manara/features/prayer/domain/repositories/prayer_times_repository.dart'
+    as _i742;
+import 'package:manara/features/prayer/domain/usecases/get_prayer_times.dart'
+    as _i462;
+import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart'
+    as _i258;
 import 'package:manara/features/quran/data/datasources/quran_remote_data_source.dart'
     as _i359;
 import 'package:manara/features/quran/data/datasources/reader_preferences_local_data_source.dart'
@@ -55,6 +75,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i359.QuranRemoteDataSource>(
       () => _i359.QuranRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i970.DailyHadithLocalDataSource>(
+      () => const _i970.DailyHadithLocalDataSourceImpl(),
+    );
+    gh.lazySingleton<_i945.PrayerTimesRemoteDataSource>(
+      () => _i945.PrayerTimesRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i146.HadithRepository>(
+      () => _i949.HadithRepositoryImpl(gh<_i970.DailyHadithLocalDataSource>()),
+    );
+    gh.lazySingleton<_i742.PrayerTimesRepository>(
+      () => _i598.PrayerTimesRepositoryImpl(
+        gh<_i945.PrayerTimesRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i1.GetHadithOfTheDay>(
+      () => _i1.GetHadithOfTheDay(gh<_i146.HadithRepository>()),
+    );
+    gh.factory<_i462.GetPrayerTimes>(
+      () => _i462.GetPrayerTimes(gh<_i742.PrayerTimesRepository>()),
+    );
     gh.lazySingleton<_i733.ReaderPreferencesLocalDataSource>(
       () => _i733.ReaderPreferencesLocalDataSourceImpl(
         gh<_i460.SharedPreferences>(),
@@ -62,6 +102,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i119.QuranRepository>(
       () => _i426.QuranRepositoryImpl(gh<_i359.QuranRemoteDataSource>()),
+    );
+    gh.factory<_i258.PrayerTimesCubit>(
+      () => _i258.PrayerTimesCubit(gh<_i462.GetPrayerTimes>()),
     );
     gh.lazySingleton<_i845.ReaderPreferencesRepository>(
       () => _i395.ReaderPreferencesRepositoryImpl(
@@ -88,6 +131,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i551.SaveReaderSettings>(
       () => _i551.SaveReaderSettings(gh<_i845.ReaderPreferencesRepository>()),
+    );
+    gh.factory<_i757.HomeCubit>(
+      () => _i757.HomeCubit(
+        gh<_i1.GetHadithOfTheDay>(),
+        gh<_i147.GetReaderProgress>(),
+      ),
     );
     gh.factory<_i917.ReaderSettingsCubit>(
       () => _i917.ReaderSettingsCubit(

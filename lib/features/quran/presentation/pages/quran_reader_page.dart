@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:manara/core/constants/app_constants.dart';
 import 'package:manara/core/di/injection.dart';
 import 'package:manara/core/extensions/context_extensions.dart';
 import 'package:manara/core/theme/theme.dart';
@@ -50,10 +49,10 @@ class QuranReaderView extends StatelessWidget {
     final cubit = context.read<QuranReaderCubit>();
     final padding = context.isMobile ? AppSpacing.sm : AppSpacing.xl;
 
-    return Scaffold(
-      backgroundColor: AppColors.readerBackground,
-      appBar: const _QuranAppBar(),
+    return AppScaffold(
+      active: NavItem.quran,
       body: SafeArea(
+        top: false,
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(
             padding,
@@ -169,34 +168,6 @@ class _DesktopLayout extends StatelessWidget {
           ),
         ],
       ],
-    );
-  }
-}
-
-class _QuranAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _QuranAppBar();
-
-  @override
-  Size get preferredSize => const Size.fromHeight(64);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      toolbarHeight: 64,
-      centerTitle: false,
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(AppImages.logo, height: 44, excludeFromSemantics: true),
-          const SizedBox(width: AppSpacing.sm),
-          Text(
-            AppConstants.appName,
-            style: AppTypography.h2Bold.copyWith(
-              color: AppColors.readerBackground,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

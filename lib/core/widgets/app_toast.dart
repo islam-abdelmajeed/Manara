@@ -38,16 +38,19 @@ class AppToast extends StatelessWidget {
   }
 }
 
+/// A floating snack bar that renders [AppToast].
+SnackBar appToastSnackBar(String message) {
+  return SnackBar(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    padding: EdgeInsets.zero,
+    content: Center(child: AppToast(message: message)),
+  );
+}
+
 /// Shows [AppToast] as a floating snack bar.
 void showAppToast(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
-    ..showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        padding: EdgeInsets.zero,
-        content: Center(child: AppToast(message: message)),
-      ),
-    );
+    ..showSnackBar(appToastSnackBar(message));
 }

@@ -10,6 +10,9 @@ abstract final class AppTypography {
   /// Font used for Quran text (Figma: Amiri Quran 36 / line height 97).
   static const String quranFontFamily = 'AmiriQuran';
 
+  /// Display font for the prayer countdown (Figma: Cal Sans).
+  static const String counterFontFamily = 'CalSans';
+
   static const FontWeight regular = FontWeight.w400;
   static const FontWeight medium = FontWeight.w500;
   static const FontWeight bold = FontWeight.w700;

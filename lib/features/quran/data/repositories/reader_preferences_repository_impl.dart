@@ -32,17 +32,23 @@ class ReaderPreferencesRepositoryImpl implements ReaderPreferencesRepository {
   }
 
   @override
-  ResultFuture<ReaderProgress> recordVisit(int page) {
+  ResultFuture<ReaderProgress> recordVisit(int page, {DateTime? now}) {
     return guard(() async {
       final current = _local.readProgress();
       final recent = [
         page,
         ...current.recentPages.where((p) => p != page),
       ].take(ReaderProgress.maxRecent).toList();
-      final updated = ReaderProgress(
+      final clock = now ?? DateTime.now();
+      final today = DateTime(clock.year, clock.month, clock.day);
+      final days = [
+        today,
+        ...current.readingDays.where((d) => d != today),
+      ].take(ReaderProgress.maxReadingDays).toList();
+      final updated = current.copyWith(
         lastPage: page,
         recentPages: recent,
-        bookmarkedPages: current.bookmarkedPages,
+        readingDays: days,
       );
       await _local.writeProgress(updated);
       return updated;
@@ -56,11 +62,7 @@ class ReaderPreferencesRepositoryImpl implements ReaderPreferencesRepository {
       final bookmarks = current.isBookmarked(page)
           ? current.bookmarkedPages.where((p) => p != page).toList()
           : [...current.bookmarkedPages, page];
-      final updated = ReaderProgress(
-        lastPage: current.lastPage,
-        recentPages: current.recentPages,
-        bookmarkedPages: bookmarks,
-      );
+      final updated = current.copyWith(bookmarkedPages: bookmarks);
       await _local.writeProgress(updated);
       return updated;
     });

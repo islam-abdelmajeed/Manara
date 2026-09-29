@@ -75,6 +75,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/home/
     - assets/icons/
 
   fonts:
@@ -90,4 +91,9 @@ flutter:
     - family: AmiriQuran
       fonts:
         - asset: assets/fonts/AmiriQuran-Regular.ttf
+          weight: 400
+
+    - family: CalSans
+      fonts:
+        - asset: assets/fonts/CalSans-Regular.ttf
           weight: 400

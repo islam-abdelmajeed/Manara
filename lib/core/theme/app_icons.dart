@@ -14,6 +14,7 @@ abstract final class AppIcons {
   static const String bookmarkCheck = '$_base/bookmark_check.svg';
   static const String bookmarkMinus = '$_base/bookmark_minus.svg';
   static const String bookmarkPosition = '$_base/bookmark_position.svg';
+  static const String calendar = '$_base/calendar.svg';
   static const String cloudDownload = '$_base/cloud_download.svg';
   static const String compass = '$_base/compass.svg';
   static const String copy = '$_base/copy.svg';
@@ -46,6 +47,7 @@ abstract final class AppIcons {
   static const String share = '$_base/share.svg';
   static const String shield = '$_base/shield.svg';
   static const String stars = '$_base/stars.svg';
+  static const String starsFilled = '$_base/stars_filled.svg';
   static const String sun = '$_base/sun.svg';
   static const String swap = '$_base/swap.svg';
   static const String swapAlt = '$_base/swap_alt.svg';

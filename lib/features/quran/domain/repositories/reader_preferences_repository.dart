@@ -10,9 +10,10 @@ abstract interface class ReaderPreferencesRepository {
 
   ResultFuture<ReaderProgress> getProgress();
 
-  /// Stores [page] as the last read page and moves it to the top of the
-  /// recent list.
-  ResultFuture<ReaderProgress> recordVisit(int page);
+  /// Stores [page] as the last read page, moves it to the top of the
+  /// recent list and marks [now] (defaults to the current time) as a
+  /// reading day.
+  ResultFuture<ReaderProgress> recordVisit(int page, {DateTime? now});
 
   /// Adds [page] to the bookmarks, or removes it when already there.
   ResultFuture<ReaderProgress> toggleBookmark(int page);
