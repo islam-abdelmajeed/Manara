@@ -12,13 +12,19 @@ import 'package:manara/features/quran/presentation/widgets/reader_card.dart';
 import 'package:manara/features/quran/presentation/widgets/settings_panel.dart';
 
 class QuranReaderPage extends StatelessWidget {
-  const QuranReaderPage({super.key});
+  const QuranReaderPage({this.initialPage, super.key});
+
+  /// Page to open; the last read page when `null`.
+  final int? initialPage;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => getIt<QuranReaderCubit>()..init()),
+        BlocProvider(
+          create: (_) =>
+              getIt<QuranReaderCubit>()..init(initialPage: initialPage),
+        ),
         BlocProvider(create: (_) => getIt<ReaderSettingsCubit>()..load()),
       ],
       child: const QuranReaderView(),

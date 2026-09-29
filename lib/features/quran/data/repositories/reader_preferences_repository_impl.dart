@@ -45,10 +45,15 @@ class ReaderPreferencesRepositoryImpl implements ReaderPreferencesRepository {
         today,
         ...current.readingDays.where((d) => d != today),
       ].take(ReaderProgress.maxReadingDays).toList();
+      final wirdPages = current.wirdDate == today
+          ? {...current.wirdPages, page}.toList()
+          : [page];
       final updated = current.copyWith(
         lastPage: page,
         recentPages: recent,
         readingDays: days,
+        wirdDate: today,
+        wirdPages: wirdPages,
       );
       await _local.writeProgress(updated);
       return updated;

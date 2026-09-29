@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+import 'package:manara/core/router/app_routes.dart';
+import 'package:manara/core/theme/app_theme.dart';
 import 'package:manara/core/widgets/widgets.dart';
 
 import '../../helpers/pump_app.dart';
@@ -101,6 +105,60 @@ void main() {
       expect(find.text('القرآن والتعلم'), findsOneWidget);
       await tester.scrollUntilVisible(find.text('الملف الشخصي'), 200);
       expect(find.text('الملف الشخصي'), findsOneWidget);
+    });
+  });
+
+  group('active section link', () {
+    Future<GoRouter> pumpAt(WidgetTester tester, String location) async {
+      tester.view.physicalSize = _desktop;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      Widget page(String name) =>
+          AppScaffold(active: NavItem.quran, body: Text(name));
+      final router = GoRouter(
+        initialLocation: location,
+        routes: [
+          GoRoute(
+            path: AppRoutes.quran,
+            builder: (_, _) => page('INDEX'),
+            routes: [GoRoute(path: 'read', builder: (_, _) => page('READER'))],
+          ),
+        ],
+      );
+      addTearDown(router.dispose);
+      await tester.pumpWidget(
+        MaterialApp.router(
+          theme: AppTheme.light,
+          locale: const Locale('ar'),
+          supportedLocales: const [Locale('ar')],
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
+          routerConfig: router,
+        ),
+      );
+      await tester.pumpAndSettle();
+      return router;
+    }
+
+    testWidgets('leads back to the section page from a sub-page', (
+      tester,
+    ) async {
+      await pumpAt(tester, AppRoutes.quranReader);
+
+      await tester.tap(find.text('القرآن الكريم'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('INDEX'), findsOneWidget);
+    });
+
+    testWidgets('does nothing on the section page itself', (tester) async {
+      final router = await pumpAt(tester, AppRoutes.quran);
+
+      await tester.tap(find.text('القرآن الكريم'));
+      await tester.pumpAndSettle();
+
+      expect(router.state.uri.path, AppRoutes.quran);
+      expect(find.text('INDEX'), findsOneWidget);
     });
   });
 }

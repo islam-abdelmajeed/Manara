@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:manara/core/router/app_routes.dart';
 import 'package:manara/features/home/presentation/pages/home_page.dart';
+import 'package:manara/features/quran/presentation/pages/quran_index_page.dart';
 import 'package:manara/features/quran/presentation/pages/quran_reader_page.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -12,7 +13,15 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.quran,
-      builder: (context, state) => const QuranReaderPage(),
+      builder: (context, state) => const QuranIndexPage(),
+      routes: [
+        GoRoute(
+          path: 'read',
+          builder: (context, state) => QuranReaderPage(
+            initialPage: int.tryParse(state.uri.queryParameters['page'] ?? ''),
+          ),
+        ),
+      ],
     ),
   ],
 );

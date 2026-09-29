@@ -9,6 +9,8 @@ class AppSearchField extends StatelessWidget {
     this.controller,
     this.onChanged,
     this.onSubmitted,
+    this.fillColor,
+    this.iconAtEnd = false,
     super.key,
   });
 
@@ -17,11 +19,29 @@ class AppSearchField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
 
+  /// Background; transparent when `null`.
+  final Color? fillColor;
+
+  /// Puts the search icon after the text (left in RTL) instead of before it.
+  final bool iconAtEnd;
+
   static const double _height = 44;
 
   static const _border = OutlineInputBorder(
     borderRadius: AppRadius.xlAll,
     borderSide: BorderSide(color: AppColors.borderStrong),
+  );
+
+  Widget get _icon => Padding(
+    padding: EdgeInsetsDirectional.only(
+      start: iconAtEnd ? AppSpacing.xs : AppSpacing.sm,
+      end: iconAtEnd ? AppSpacing.md : AppSpacing.xs,
+    ),
+    child: const AppIcon(
+      AppIcons.search,
+      size: 20,
+      color: AppColors.darkBrown900,
+    ),
   );
 
   @override
@@ -42,7 +62,8 @@ class AppSearchField extends StatelessWidget {
           hintStyle: AppTypography.labelRegular.copyWith(
             color: AppColors.textHint,
           ),
-          filled: false,
+          filled: fillColor != null,
+          fillColor: fillColor,
           isDense: true,
           // The border hugs the content, so the height is made of the text
           // line plus this padding.
@@ -50,18 +71,10 @@ class AppSearchField extends StatelessWidget {
             horizontal: AppSpacing.md,
             vertical: AppSpacing.sm,
           ),
-          prefixIcon: const Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: AppSpacing.sm,
-              end: AppSpacing.xs,
-            ),
-            child: AppIcon(
-              AppIcons.search,
-              size: 20,
-              color: AppColors.darkBrown900,
-            ),
-          ),
+          prefixIcon: iconAtEnd ? null : _icon,
           prefixIconConstraints: const BoxConstraints(),
+          suffixIcon: iconAtEnd ? _icon : null,
+          suffixIconConstraints: const BoxConstraints(),
           border: _border,
           enabledBorder: _border,
           focusedBorder: _border.copyWith(

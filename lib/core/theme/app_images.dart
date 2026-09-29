@@ -2,6 +2,7 @@
 abstract final class AppImages {
   static const String _base = 'assets/images';
   static const String _home = '$_base/home';
+  static const String _quran = '$_base/quran';
 
   /// Lantern logo (Figma component "لوجو"), exported at 4x.
   static const String logo = '$_base/logo.png';
@@ -23,4 +24,8 @@ abstract final class AppImages {
   static const String treasureKids = '$_home/treasure_kids.webp';
   static const String treasureRecitation = '$_home/treasure_recitation.webp';
   static const String treasureVoiceRooms = '$_home/treasure_voice_rooms.webp';
+
+  // Quran index (Figma "Desktop - 4"). Captured from the design canvas on
+  // the card color, since the file's image fills could not be exported.
+  static const String dailyWirdFlower = '$_quran/daily_wird_flower.webp';
 }

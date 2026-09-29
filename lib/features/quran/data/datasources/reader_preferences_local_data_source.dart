@@ -32,6 +32,8 @@ class ReaderPreferencesLocalDataSourceImpl
   static const _recent = 'reader.recent';
   static const _bookmarks = 'reader.bookmarks';
   static const _days = 'reader.days';
+  static const _wirdDate = 'reader.wirdDate';
+  static const _wirdPages = 'reader.wirdPages';
 
   @override
   ReaderSettings readSettings() {
@@ -81,6 +83,8 @@ class ReaderPreferencesLocalDataSourceImpl
         for (final raw in _prefs.getStringList(_days) ?? const <String>[])
           ?DateTime.tryParse(raw),
       ],
+      wirdDate: DateTime.tryParse(_prefs.getString(_wirdDate) ?? ''),
+      wirdPages: _intList(_wirdPages),
     );
   }
 
@@ -93,6 +97,8 @@ class ReaderPreferencesLocalDataSourceImpl
         for (final n in p.bookmarkedPages) '$n',
       ]),
       _prefs.setStringList(_days, [for (final d in p.readingDays) _date(d)]),
+      if (p.wirdDate case final date?) _prefs.setString(_wirdDate, _date(date)),
+      _prefs.setStringList(_wirdPages, [for (final n in p.wirdPages) '$n']),
     ]);
   }
 

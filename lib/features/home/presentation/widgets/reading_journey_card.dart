@@ -39,7 +39,7 @@ class ReadingJourneyCard extends StatelessWidget {
       label: 'رحلتك في منارة: الجزء $juz من 30، ${streakLabel(streak)}',
       excludeSemantics: true,
       child: GestureDetector(
-        onTap: () => context.go(AppRoutes.quran),
+        onTap: () => context.go(AppRoutes.quranReader),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: DesignBox(

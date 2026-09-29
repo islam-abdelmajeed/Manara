@@ -32,6 +32,15 @@ void showComingSoon(BuildContext context) => showAppToast(context, _comingSoon);
 
 SnackBar comingSoonSnackBar() => appToastSnackBar(_comingSoon);
 
+/// Whether [route] is the page being shown, so its link has nothing to do.
+/// An active section's link still leads back to its main page from a
+/// sub-page (e.g. the reader under the Quran index).
+bool _isShowing(BuildContext context, String? route) {
+  final router = GoRouter.maybeOf(context);
+  if (router == null || route == null) return true;
+  return router.state.uri.path == route;
+}
+
 void _openRoute(BuildContext context, String? route) {
   if (route == null) {
     showComingSoon(context);
@@ -285,7 +294,10 @@ class _NavLink extends StatelessWidget {
         borderRadius: AppRadius.mdAll,
         child: InkWell(
           onTap:
-              onTap ?? (active ? null : () => _openRoute(context, item.route)),
+              onTap ??
+              (active && _isShowing(context, item.route)
+                  ? null
+                  : () => _openRoute(context, item.route)),
           borderRadius: AppRadius.mdAll,
           hoverColor: Colors.white.withValues(alpha: 0.08),
           child: Padding(
@@ -433,7 +445,7 @@ class _DrawerLink extends StatelessWidget {
       borderRadius: AppRadius.mdAll,
       child: InkWell(
         borderRadius: AppRadius.mdAll,
-        onTap: () => active
+        onTap: () => active && _isShowing(context, item.route)
             ? Navigator.of(context).pop()
             : _openFromDrawer(context, item.route),
         child: Padding(

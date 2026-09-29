@@ -103,4 +103,67 @@ void main() {
       expect(progress.readingDays, hasLength(ReaderProgress.maxReadingDays));
     });
   });
+
+  group('daily wird', () {
+    Future<ReaderPreferencesRepositoryImpl> repository() async {
+      SharedPreferences.setMockInitialValues({});
+      return ReaderPreferencesRepositoryImpl(
+        ReaderPreferencesLocalDataSourceImpl(
+          await SharedPreferences.getInstance(),
+        ),
+      );
+    }
+
+    ReaderProgress right(dynamic either) =>
+        (either as dynamic).getOrElse((_) => throw StateError('left'))
+            as ReaderProgress;
+
+    test('counts only pages read on the given day', () {
+      final progress = ReaderProgress(wirdDate: d(29), wirdPages: const [4, 5]);
+
+      expect(progress.pagesReadOn(DateTime(2026, 9, 29, 23)), 2);
+      expect(progress.pagesReadOn(d(30)), 0);
+      expect(const ReaderProgress().pagesReadOn(d(29)), 0);
+    });
+
+    test('progress is the share of the goal, capped at 1', () {
+      final half = ReaderProgress(
+        wirdDate: d(29),
+        wirdPages: List.generate(ReaderProgress.dailyWirdPages ~/ 2, (i) => i),
+      );
+      final over = ReaderProgress(
+        wirdDate: d(29),
+        wirdPages: List.generate(ReaderProgress.dailyWirdPages + 3, (i) => i),
+      );
+
+      expect(half.wirdProgressOn(d(29)), 0.5);
+      expect(over.wirdProgressOn(d(29)), 1);
+    });
+
+    test('a visit adds distinct pages for today', () async {
+      final repo = await repository();
+
+      await repo.recordVisit(3, now: DateTime(2026, 9, 29, 8));
+      await repo.recordVisit(4, now: DateTime(2026, 9, 29, 9));
+      final progress = right(
+        await repo.recordVisit(3, now: DateTime(2026, 9, 29, 10)),
+      );
+
+      expect(progress.wirdDate, d(29));
+      expect(progress.wirdPages, [3, 4]);
+    });
+
+    test('starts over on a new day and survives a reload', () async {
+      final repo = await repository();
+
+      await repo.recordVisit(3, now: d(28));
+      await repo.recordVisit(4, now: d(28));
+      await repo.recordVisit(9, now: d(29));
+      final progress = right(await repo.getProgress());
+
+      expect(progress.wirdDate, d(29));
+      expect(progress.wirdPages, [9]);
+      expect(progress.pagesReadOn(d(29)), 1);
+    });
+  });
 }

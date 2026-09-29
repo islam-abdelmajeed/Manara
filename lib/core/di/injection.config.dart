@@ -53,6 +53,8 @@ import 'package:manara/features/quran/domain/usecases/reader_progress_usecases.d
     as _i147;
 import 'package:manara/features/quran/domain/usecases/reader_settings_usecases.dart'
     as _i551;
+import 'package:manara/features/quran/presentation/cubit/quran_index_cubit.dart'
+    as _i509;
 import 'package:manara/features/quran/presentation/cubit/quran_reader_cubit.dart'
     as _i1056;
 import 'package:manara/features/quran/presentation/cubit/reader_settings_cubit.dart'
@@ -151,6 +153,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i147.GetReaderProgress>(),
         gh<_i147.RecordPageVisit>(),
         gh<_i147.ToggleBookmark>(),
+      ),
+    );
+    gh.factory<_i509.QuranIndexCubit>(
+      () => _i509.QuranIndexCubit(
+        gh<_i73.GetSurahs>(),
+        gh<_i147.GetReaderProgress>(),
+        gh<_i470.GetMushafPage>(),
       ),
     );
     return this;
