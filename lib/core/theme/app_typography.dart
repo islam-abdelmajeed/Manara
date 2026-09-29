@@ -7,6 +7,9 @@ import 'package:flutter/painting.dart';
 abstract final class AppTypography {
   static const String fontFamily = 'Tajawal';
 
+  /// Font used for Quran text (Figma: Amiri Quran 36 / line height 97).
+  static const String quranFontFamily = 'AmiriQuran';
+
   static const FontWeight regular = FontWeight.w400;
   static const FontWeight medium = FontWeight.w500;
   static const FontWeight bold = FontWeight.w700;
@@ -249,5 +252,13 @@ abstract final class AppTypography {
     fontSize: 15,
     height: 20 / 15,
     fontWeight: bold,
+  );
+
+  /// Base Quran text style at the Figma desktop size; scaled by the reader.
+  static const TextStyle quran = TextStyle(
+    fontFamily: quranFontFamily,
+    fontSize: 36,
+    height: 97 / 36,
+    fontWeight: regular,
   );
 }

@@ -16,4 +16,22 @@ extension PumpApp on WidgetTester {
       ),
     );
   }
+
+  /// Pumps a full-screen [widget] (one that has its own Scaffold) at the
+  /// given logical [size].
+  Future<void> pumpScreen(Widget widget, {Size size = const Size(390, 844)}) {
+    view.physicalSize = size;
+    view.devicePixelRatio = 1;
+    addTearDown(view.resetPhysicalSize);
+    addTearDown(view.resetDevicePixelRatio);
+    return pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light,
+        locale: const Locale('ar'),
+        supportedLocales: const [Locale('ar')],
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        home: widget,
+      ),
+    );
+  }
 }

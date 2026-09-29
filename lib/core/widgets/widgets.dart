@@ -3,6 +3,7 @@ export 'app_card.dart';
 export 'app_filter_chip.dart';
 export 'app_icon.dart';
 export 'app_search_field.dart';
+export 'app_tab_bar.dart';
 export 'app_text_field.dart';
 export 'app_toast.dart';
 export 'app_toggle_tile.dart';

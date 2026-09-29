@@ -14,16 +14,96 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:manara/core/di/register_module.dart' as _i530;
+import 'package:manara/features/quran/data/datasources/quran_remote_data_source.dart'
+    as _i359;
+import 'package:manara/features/quran/data/datasources/reader_preferences_local_data_source.dart'
+    as _i733;
+import 'package:manara/features/quran/data/repositories/quran_repository_impl.dart'
+    as _i426;
+import 'package:manara/features/quran/data/repositories/reader_preferences_repository_impl.dart'
+    as _i395;
+import 'package:manara/features/quran/domain/repositories/quran_repository.dart'
+    as _i119;
+import 'package:manara/features/quran/domain/repositories/reader_preferences_repository.dart'
+    as _i845;
+import 'package:manara/features/quran/domain/usecases/get_mushaf_page.dart'
+    as _i470;
+import 'package:manara/features/quran/domain/usecases/get_surahs.dart' as _i73;
+import 'package:manara/features/quran/domain/usecases/reader_progress_usecases.dart'
+    as _i147;
+import 'package:manara/features/quran/domain/usecases/reader_settings_usecases.dart'
+    as _i551;
+import 'package:manara/features/quran/presentation/cubit/quran_reader_cubit.dart'
+    as _i1056;
+import 'package:manara/features/quran/presentation/cubit/reader_settings_cubit.dart'
+    as _i917;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => registerModule.prefs,
+      preResolve: true,
+    );
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i359.QuranRemoteDataSource>(
+      () => _i359.QuranRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i733.ReaderPreferencesLocalDataSource>(
+      () => _i733.ReaderPreferencesLocalDataSourceImpl(
+        gh<_i460.SharedPreferences>(),
+      ),
+    );
+    gh.lazySingleton<_i119.QuranRepository>(
+      () => _i426.QuranRepositoryImpl(gh<_i359.QuranRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i845.ReaderPreferencesRepository>(
+      () => _i395.ReaderPreferencesRepositoryImpl(
+        gh<_i733.ReaderPreferencesLocalDataSource>(),
+      ),
+    );
+    gh.factory<_i470.GetMushafPage>(
+      () => _i470.GetMushafPage(gh<_i119.QuranRepository>()),
+    );
+    gh.factory<_i73.GetSurahs>(
+      () => _i73.GetSurahs(gh<_i119.QuranRepository>()),
+    );
+    gh.factory<_i147.GetReaderProgress>(
+      () => _i147.GetReaderProgress(gh<_i845.ReaderPreferencesRepository>()),
+    );
+    gh.factory<_i147.RecordPageVisit>(
+      () => _i147.RecordPageVisit(gh<_i845.ReaderPreferencesRepository>()),
+    );
+    gh.factory<_i147.ToggleBookmark>(
+      () => _i147.ToggleBookmark(gh<_i845.ReaderPreferencesRepository>()),
+    );
+    gh.factory<_i551.GetReaderSettings>(
+      () => _i551.GetReaderSettings(gh<_i845.ReaderPreferencesRepository>()),
+    );
+    gh.factory<_i551.SaveReaderSettings>(
+      () => _i551.SaveReaderSettings(gh<_i845.ReaderPreferencesRepository>()),
+    );
+    gh.factory<_i917.ReaderSettingsCubit>(
+      () => _i917.ReaderSettingsCubit(
+        gh<_i551.GetReaderSettings>(),
+        gh<_i551.SaveReaderSettings>(),
+      ),
+    );
+    gh.factory<_i1056.QuranReaderCubit>(
+      () => _i1056.QuranReaderCubit(
+        gh<_i73.GetSurahs>(),
+        gh<_i470.GetMushafPage>(),
+        gh<_i147.GetReaderProgress>(),
+        gh<_i147.RecordPageVisit>(),
+        gh<_i147.ToggleBookmark>(),
+      ),
+    );
     return this;
   }
 }

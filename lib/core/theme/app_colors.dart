@@ -42,6 +42,15 @@ abstract final class AppColors {
   static const Color liveDot = Color(0xFF4A8C52);
   static const Color endedBackground = Color(0xFFEBE8E0);
 
+  /// Selected tab fill and outline of unselected tabs (reader screens).
+  static const Color tabSelected = green900;
+
+  /// Reader page background (Figma frame fill `#F4EBDD`).
+  static const Color readerBackground = cream500;
+
+  /// Highlight behind the active ayah (Figma `#ADBCAC` at 75%).
+  static const Color ayahHighlight = Color(0xBFADBCAC);
+
   /// Circular icon holder on room cards.
   static const Color avatarBackground = Color(0xFFEDE8D9);
 

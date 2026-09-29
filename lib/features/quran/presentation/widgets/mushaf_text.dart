@@ -1,0 +1,173 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:manara/core/theme/theme.dart';
+import 'package:manara/features/quran/domain/entities/ayah.dart';
+import 'package:manara/features/quran/domain/entities/mushaf_page.dart';
+import 'package:manara/features/quran/domain/entities/reader_settings.dart';
+import 'package:manara/features/quran/domain/entities/surah.dart';
+import 'package:manara/features/quran/presentation/utils/quran_text_formatter.dart';
+import 'package:manara/features/quran/presentation/utils/reader_palette.dart';
+
+/// Renders the ayahs of a [MushafPage] as flowing, justified Quran text.
+///
+/// Tapping an ayah reports its key; the ayah with [selectedAyahKey] is
+/// highlighted.
+class MushafText extends StatefulWidget {
+  const MushafText({
+    required this.page,
+    required this.settings,
+    required this.baseFontSize,
+    required this.surahs,
+    required this.onAyahTap,
+    this.selectedAyahKey,
+    super.key,
+  });
+
+  final MushafPage page;
+  final ReaderSettings settings;
+
+  /// Font size before the user's scale is applied.
+  final double baseFontSize;
+  final List<Surah> surahs;
+  final String? selectedAyahKey;
+  final ValueChanged<String> onAyahTap;
+
+  @override
+  State<MushafText> createState() => _MushafTextState();
+}
+
+class _MushafTextState extends State<MushafText> {
+  final Map<String, TapGestureRecognizer> _recognizers = {};
+
+  @override
+  void dispose() {
+    for (final recognizer in _recognizers.values) {
+      recognizer.dispose();
+    }
+    super.dispose();
+  }
+
+  TapGestureRecognizer _recognizerFor(String key) {
+    return _recognizers.putIfAbsent(
+      key,
+      () => TapGestureRecognizer()..onTap = () => widget.onAyahTap(key),
+    );
+  }
+
+  String _surahName(int id) {
+    for (final surah in widget.surahs) {
+      if (surah.id == id) return surah.nameArabic;
+    }
+    return '';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = widget.settings;
+    final textStyle = AppTypography.quran.copyWith(
+      fontSize: widget.baseFontSize * settings.fontScale,
+      height: settings.lineSpacing.height,
+      color: ReaderPalette.text(settings.textColorIndex),
+    );
+
+    final children = <Widget>[];
+    var buffer = <Ayah>[];
+
+    void flush() {
+      if (buffer.isEmpty) return;
+      children.add(_buildParagraph(buffer, textStyle));
+      buffer = <Ayah>[];
+    }
+
+    for (final ayah in widget.page.ayahs) {
+      if (ayah.number == 1) {
+        flush();
+        children.add(
+          _SurahBanner(
+            name: _surahName(ayah.surahNumber),
+            // Al-Fatiha carries the basmala as its first ayah and At-Tawbah
+            // has none.
+            showBasmala: ayah.surahNumber != 1 && ayah.surahNumber != 9,
+            style: textStyle,
+          ),
+        );
+      }
+      buffer.add(ayah);
+    }
+    flush();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: children,
+    );
+  }
+
+  Widget _buildParagraph(List<Ayah> ayahs, TextStyle style) {
+    final settings = widget.settings;
+    final selected = widget.selectedAyahKey;
+
+    return Text.rich(
+      TextSpan(
+        children: [
+          for (final ayah in ayahs)
+            TextSpan(
+              text:
+                  '${QuranTextFormatter.format(ayah.text, showStopMarks: settings.showStopMarks, showTashkeel: settings.showTashkeel)} '
+                  '${QuranTextFormatter.ayahEndMarker(ayah.number)} ',
+              recognizer: _recognizerFor(ayah.key),
+              style: ayah.key == selected
+                  ? style.copyWith(backgroundColor: AppColors.ayahHighlight)
+                  : null,
+            ),
+        ],
+      ),
+      style: style,
+      textAlign: TextAlign.justify,
+      textDirection: TextDirection.rtl,
+    );
+  }
+}
+
+class _SurahBanner extends StatelessWidget {
+  const _SurahBanner({
+    required this.name,
+    required this.showBasmala,
+    required this.style,
+  });
+
+  final String name;
+  final bool showBasmala;
+  final TextStyle style;
+
+  static const _basmala = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
+
+  @override
+  Widget build(BuildContext context) {
+    final titleSize = (style.fontSize ?? 30) * 0.85;
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.xs),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsetsDirectional.symmetric(
+              vertical: AppSpacing.xxs,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.08),
+              borderRadius: AppRadius.smAll,
+              border: Border.all(color: AppColors.primary, width: 1.5),
+            ),
+            child: Text(
+              'سُورَةُ $name',
+              textAlign: TextAlign.center,
+              style: style.copyWith(fontSize: titleSize, height: 1.8),
+            ),
+          ),
+          if (showBasmala)
+            Text(_basmala, textAlign: TextAlign.center, style: style),
+        ],
+      ),
+    );
+  }
+}
