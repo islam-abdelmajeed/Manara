@@ -11,14 +11,16 @@ class MushafFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    // Container (unlike DecoratedBox) insets the child by the border width,
+    // so everything sits inside the green frame.
+    return Container(
       decoration: BoxDecoration(
         color: color ?? AppColors.readerBackground,
         borderRadius: AppRadius.mdAll,
         border: Border.all(color: AppColors.primary, width: 4),
       ),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(AppRadius.md - 2)),
+        borderRadius: const BorderRadius.all(Radius.circular(AppRadius.md - 4)),
         child: child,
       ),
     );

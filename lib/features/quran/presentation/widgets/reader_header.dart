@@ -50,19 +50,19 @@ class ReaderHeader extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Flexible(child: _Title(surah: current)),
+                const SizedBox(width: AppSpacing.sm),
+                const SizedBox(
+                  height: 25,
+                  child: VerticalDivider(width: 1, color: Color(0x45000000)),
+                ),
+                const SizedBox(width: AppSpacing.xs),
                 _HeaderButton(
                   icon: AppIcons.play,
                   tooltip: 'استماع',
                   size: 27,
                   onTap: onPlayTap,
                 ),
-                const SizedBox(width: AppSpacing.xs),
-                const SizedBox(
-                  height: 25,
-                  child: VerticalDivider(width: 1, color: Color(0x45000000)),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Flexible(child: _Title(surah: current)),
               ],
             ),
           ),

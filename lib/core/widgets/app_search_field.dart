@@ -17,6 +17,8 @@ class AppSearchField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
 
+  static const double _height = 44;
+
   static const _border = OutlineInputBorder(
     borderRadius: AppRadius.xlAll,
     borderSide: BorderSide(color: AppColors.borderStrong),
@@ -24,8 +26,8 @@ class AppSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: _height),
       child: TextField(
         controller: controller,
         onChanged: onChanged,
@@ -42,8 +44,11 @@ class AppSearchField extends StatelessWidget {
           ),
           filled: false,
           isDense: true,
+          // The border hugs the content, so the height is made of the text
+          // line plus this padding.
           contentPadding: const EdgeInsetsDirectional.symmetric(
             horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm,
           ),
           prefixIcon: const Padding(
             padding: EdgeInsetsDirectional.only(
