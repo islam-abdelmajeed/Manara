@@ -12,6 +12,7 @@ export 'app_toast.dart';
 export 'app_toggle_tile.dart';
 export 'design_box.dart';
 export 'member_card.dart';
+export 'more_menu.dart';
 export 'room_link_card.dart';
 export 'section_header.dart';
 export 'selection_card.dart';
