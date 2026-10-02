@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:manara/core/usecases/usecase.dart';
 import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:manara/features/quran/domain/entities/reader_settings.dart';
+import 'package:manara/features/quran/domain/entities/tafsir.dart';
 
 abstract interface class ReaderPreferencesRepository {
   ResultFuture<ReaderSettings> getSettings();
@@ -17,4 +18,9 @@ abstract interface class ReaderPreferencesRepository {
 
   /// Adds [page] to the bookmarks, or removes it when already there.
   ResultFuture<ReaderProgress> toggleBookmark(int page);
+
+  /// The tafsir chosen in the reader; [TafsirSource.mukhtasar] by default.
+  ResultFuture<TafsirSource> getTafsirSource();
+
+  ResultFuture<Unit> saveTafsirSource(TafsirSource source);
 }

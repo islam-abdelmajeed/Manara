@@ -83,9 +83,13 @@ class QuickAccessSection extends StatelessWidget {
                 ? 3
                 : 2;
             final gap = width < 600 ? AppSpacing.md : _gap;
-            final cardWidth = math.min(
-              _QuickCard.size.width,
-              (width - gap * (columns - 1)) / columns,
+            // Never negative: Android's first frame has width 0.
+            final cardWidth = math.max(
+              0.0,
+              math.min(
+                _QuickCard.size.width,
+                (width - gap * (columns - 1)) / columns,
+              ),
             );
             return Wrap(
               alignment: WrapAlignment.center,
@@ -154,32 +158,37 @@ class _QuickCard extends StatelessWidget {
             excludeSemantics: true,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    item.image,
-                    width: item.imageSize.width,
-                    height: item.imageSize.height,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    item.title,
-                    textAlign: TextAlign.center,
-                    style: AppTypography.subtitleBold.copyWith(
-                      color: AppColors.gold900,
+              // The card has a fixed design size; with a large system font
+              // the content shrinks to fit instead of overflowing.
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      item.image,
+                      width: item.imageSize.width,
+                      height: item.imageSize.height,
+                      fit: BoxFit.fill,
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    item.subtitle,
-                    textAlign: TextAlign.center,
-                    style: AppTypography.subtitleMedium.copyWith(
-                      color: AppColors.lightGold900,
+                    const SizedBox(height: 20),
+                    Text(
+                      item.title,
+                      textAlign: TextAlign.center,
+                      style: AppTypography.subtitleBold.copyWith(
+                        color: AppColors.gold900,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    Text(
+                      item.subtitle,
+                      textAlign: TextAlign.center,
+                      style: AppTypography.subtitleMedium.copyWith(
+                        color: AppColors.lightGold900,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

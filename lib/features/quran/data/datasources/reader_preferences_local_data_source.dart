@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:manara/features/quran/domain/entities/reader_settings.dart';
+import 'package:manara/features/quran/domain/entities/tafsir.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract interface class ReaderPreferencesLocalDataSource {
@@ -11,6 +12,10 @@ abstract interface class ReaderPreferencesLocalDataSource {
   ReaderProgress readProgress();
 
   Future<void> writeProgress(ReaderProgress progress);
+
+  TafsirSource readTafsirSource();
+
+  Future<void> writeTafsirSource(TafsirSource source);
 }
 
 @LazySingleton(as: ReaderPreferencesLocalDataSource)
@@ -34,6 +39,7 @@ class ReaderPreferencesLocalDataSourceImpl
   static const _days = 'reader.days';
   static const _wirdDate = 'reader.wirdDate';
   static const _wirdPages = 'reader.wirdPages';
+  static const _tafsir = 'reader.tafsir';
 
   @override
   ReaderSettings readSettings() {
@@ -100,6 +106,21 @@ class ReaderPreferencesLocalDataSourceImpl
       if (p.wirdDate case final date?) _prefs.setString(_wirdDate, _date(date)),
       _prefs.setStringList(_wirdPages, [for (final n in p.wirdPages) '$n']),
     ]);
+  }
+
+  // Stored by name so reordering the menu never changes a saved choice.
+  @override
+  TafsirSource readTafsirSource() {
+    final name = _prefs.getString(_tafsir);
+    for (final source in TafsirSource.values) {
+      if (source.name == name) return source;
+    }
+    return TafsirSource.mukhtasar;
+  }
+
+  @override
+  Future<void> writeTafsirSource(TafsirSource source) async {
+    await _prefs.setString(_tafsir, source.name);
   }
 
   /// `yyyy-MM-dd`, which [DateTime.tryParse] reads back as local midnight.

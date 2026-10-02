@@ -7,6 +7,7 @@ import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:manara/features/quran/domain/entities/reader_settings.dart';
 import 'package:manara/features/quran/presentation/cubit/quran_reader_cubit.dart';
 import 'package:manara/features/quran/presentation/cubit/reader_settings_cubit.dart';
+import 'package:manara/features/quran/presentation/cubit/tafsir_cubit.dart';
 import 'package:manara/features/quran/presentation/pages/quran_reader_page.dart';
 import 'package:manara/features/quran/presentation/widgets/mushaf_text.dart';
 import 'package:mocktail/mocktail.dart';
@@ -20,6 +21,8 @@ class MockQuranReaderCubit extends MockCubit<QuranReaderState>
 class MockReaderSettingsCubit extends MockCubit<ReaderSettings>
     implements ReaderSettingsCubit {}
 
+class MockTafsirCubit extends MockCubit<TafsirState> implements TafsirCubit {}
+
 const _mobile = Size(390, 844);
 const _tablet = Size(768, 1024);
 const _desktop = Size(1440, 900);
@@ -27,6 +30,7 @@ const _desktop = Size(1440, 900);
 void main() {
   late MockQuranReaderCubit reader;
   late MockReaderSettingsCubit settings;
+  late MockTafsirCubit tafsir;
 
   setUpAll(() {
     registerFallbackValue(ReaderPanel.none);
@@ -37,6 +41,8 @@ void main() {
   setUp(() {
     reader = MockQuranReaderCubit();
     settings = MockReaderSettingsCubit();
+    tafsir = MockTafsirCubit();
+    when(() => tafsir.state).thenReturn(const TafsirState());
     when(() => settings.state).thenReturn(const ReaderSettings());
     when(() => reader.goToPage(any())).thenAnswer((_) async {});
     when(() => reader.nextPage()).thenAnswer((_) async {});
@@ -69,6 +75,7 @@ void main() {
         providers: [
           BlocProvider<QuranReaderCubit>.value(value: reader),
           BlocProvider<ReaderSettingsCubit>.value(value: settings),
+          BlocProvider<TafsirCubit>.value(value: tafsir),
         ],
         child: const QuranReaderView(),
       ),
@@ -117,7 +124,7 @@ void main() {
     });
 
     testWidgets('the other tabs show a coming soon message', (tester) async {
-      when(() => reader.state).thenReturn(loaded(tab: ReaderTab.tafsir));
+      when(() => reader.state).thenReturn(loaded(tab: ReaderTab.translation));
       await pump(tester, _mobile);
 
       expect(find.text('قريبًا إن شاء الله'), findsOneWidget);
@@ -183,6 +190,16 @@ void main() {
 
       expect(find.text('ميزة الاستماع قريبًا'), findsOneWidget);
     });
+  });
+
+  testWidgets('the reader fits a larger system font on mobile', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    when(() => reader.state).thenReturn(loaded());
+
+    await pump(tester, _mobile);
+
+    expect(tester.takeException(), isNull);
   });
 
   group('mobile and tablet', () {

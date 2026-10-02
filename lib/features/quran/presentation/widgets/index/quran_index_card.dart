@@ -13,6 +13,7 @@ class QuranIndexCard extends StatelessWidget {
     super.key,
   });
 
+  /// Figma height at the default font size; the card grows past it.
   static const double height = 106;
 
   final int number;
@@ -33,11 +34,14 @@ class QuranIndexCard extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           hoverColor: AppColors.primary.withValues(alpha: 0.04),
-          child: SizedBox(
-            height: height,
+          // The Figma height is a minimum: a larger system font grows the
+          // card instead of clipping the detail line.
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: height),
             child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(18, 16, 18, 8),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _NumberBadge(number: number),
@@ -78,8 +82,7 @@ class _NumberBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 13,
-      constraints: const BoxConstraints(minWidth: 28),
+      constraints: const BoxConstraints(minWidth: 28, minHeight: 13),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
       decoration: const ShapeDecoration(
         color: AppColors.readerBackground,

@@ -37,9 +37,11 @@ class TreasuresSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final screen = MediaQuery.sizeOf(context).width;
     final compact = screen < 700;
-    final itemWidth = math.min(
-      _designItem.width,
-      (screen - sidePadding) * 0.85,
+    // Android builds the first frame at width 0, before the window metrics
+    // arrive; a negative size there throws and breaks the whole section.
+    final itemWidth = math.max(
+      0.0,
+      math.min(_designItem.width, (screen - sidePadding) * 0.85),
     );
     final itemHeight = itemWidth * _designItem.height / _designItem.width;
 

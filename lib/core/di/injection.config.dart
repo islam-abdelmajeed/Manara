@@ -38,14 +38,20 @@ import 'package:manara/features/quran/data/datasources/quran_remote_data_source.
     as _i359;
 import 'package:manara/features/quran/data/datasources/reader_preferences_local_data_source.dart'
     as _i733;
+import 'package:manara/features/quran/data/datasources/tafsir_remote_data_source.dart'
+    as _i227;
 import 'package:manara/features/quran/data/repositories/quran_repository_impl.dart'
     as _i426;
 import 'package:manara/features/quran/data/repositories/reader_preferences_repository_impl.dart'
     as _i395;
+import 'package:manara/features/quran/data/repositories/tafsir_repository_impl.dart'
+    as _i390;
 import 'package:manara/features/quran/domain/repositories/quran_repository.dart'
     as _i119;
 import 'package:manara/features/quran/domain/repositories/reader_preferences_repository.dart'
     as _i845;
+import 'package:manara/features/quran/domain/repositories/tafsir_repository.dart'
+    as _i483;
 import 'package:manara/features/quran/domain/usecases/get_mushaf_page.dart'
     as _i470;
 import 'package:manara/features/quran/domain/usecases/get_surahs.dart' as _i73;
@@ -53,12 +59,16 @@ import 'package:manara/features/quran/domain/usecases/reader_progress_usecases.d
     as _i147;
 import 'package:manara/features/quran/domain/usecases/reader_settings_usecases.dart'
     as _i551;
+import 'package:manara/features/quran/domain/usecases/tafsir_usecases.dart'
+    as _i568;
 import 'package:manara/features/quran/presentation/cubit/quran_index_cubit.dart'
     as _i509;
 import 'package:manara/features/quran/presentation/cubit/quran_reader_cubit.dart'
     as _i1056;
 import 'package:manara/features/quran/presentation/cubit/reader_settings_cubit.dart'
     as _i917;
+import 'package:manara/features/quran/presentation/cubit/tafsir_cubit.dart'
+    as _i132;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -83,6 +93,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i945.PrayerTimesRemoteDataSource>(
       () => _i945.PrayerTimesRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i227.TafsirRemoteDataSource>(
+      () => _i227.TafsirRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i146.HadithRepository>(
       () => _i949.HadithRepositoryImpl(gh<_i970.DailyHadithLocalDataSource>()),
     );
@@ -102,8 +115,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i460.SharedPreferences>(),
       ),
     );
+    gh.lazySingleton<_i483.TafsirRepository>(
+      () => _i390.TafsirRepositoryImpl(gh<_i227.TafsirRemoteDataSource>()),
+    );
     gh.lazySingleton<_i119.QuranRepository>(
       () => _i426.QuranRepositoryImpl(gh<_i359.QuranRemoteDataSource>()),
+    );
+    gh.factory<_i568.GetPageTafsir>(
+      () => _i568.GetPageTafsir(gh<_i483.TafsirRepository>()),
     );
     gh.factory<_i258.PrayerTimesCubit>(
       () => _i258.PrayerTimesCubit(gh<_i462.GetPrayerTimes>()),
@@ -134,6 +153,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i551.SaveReaderSettings>(
       () => _i551.SaveReaderSettings(gh<_i845.ReaderPreferencesRepository>()),
     );
+    gh.factory<_i568.GetTafsirSource>(
+      () => _i568.GetTafsirSource(gh<_i845.ReaderPreferencesRepository>()),
+    );
+    gh.factory<_i568.SaveTafsirSource>(
+      () => _i568.SaveTafsirSource(gh<_i845.ReaderPreferencesRepository>()),
+    );
     gh.factory<_i757.HomeCubit>(
       () => _i757.HomeCubit(
         gh<_i1.GetHadithOfTheDay>(),
@@ -160,6 +185,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i73.GetSurahs>(),
         gh<_i147.GetReaderProgress>(),
         gh<_i470.GetMushafPage>(),
+      ),
+    );
+    gh.factory<_i132.TafsirCubit>(
+      () => _i132.TafsirCubit(
+        gh<_i568.GetPageTafsir>(),
+        gh<_i568.GetTafsirSource>(),
+        gh<_i568.SaveTafsirSource>(),
       ),
     );
     return this;

@@ -5,13 +5,14 @@ import 'package:manara/features/quran/domain/entities/surah.dart';
 import 'package:manara/features/quran/presentation/utils/quran_labels.dart';
 
 /// Sticky header of the Mushaf card: navigation menu, play button with the
-/// surah title, and settings.
+/// surah title, and settings. [action] takes the play button's place.
 class ReaderHeader extends StatelessWidget {
   const ReaderHeader({
     required this.surah,
     required this.onNavigationTap,
     required this.onSettingsTap,
     required this.onPlayTap,
+    this.action,
     this.compact = false,
     super.key,
   });
@@ -20,6 +21,10 @@ class ReaderHeader extends StatelessWidget {
   final VoidCallback onNavigationTap;
   final VoidCallback onSettingsTap;
   final VoidCallback onPlayTap;
+
+  /// Shown next to the title instead of the play button, e.g. the tafsir
+  /// picker.
+  final Widget? action;
 
   /// Tighter padding for small screens.
   final bool compact;
@@ -57,12 +62,13 @@ class ReaderHeader extends StatelessWidget {
                   child: VerticalDivider(width: 1, color: Color(0x45000000)),
                 ),
                 const SizedBox(width: AppSpacing.xs),
-                _HeaderButton(
-                  icon: AppIcons.play,
-                  tooltip: 'استماع',
-                  size: 27,
-                  onTap: onPlayTap,
-                ),
+                action ??
+                    _HeaderButton(
+                      icon: AppIcons.play,
+                      tooltip: 'استماع',
+                      size: 27,
+                      onTap: onPlayTap,
+                    ),
               ],
             ),
           ),

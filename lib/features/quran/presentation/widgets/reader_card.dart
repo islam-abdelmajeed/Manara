@@ -7,11 +7,15 @@ import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/quran/domain/entities/reader_settings.dart';
 import 'package:manara/features/quran/presentation/cubit/quran_reader_cubit.dart';
 import 'package:manara/features/quran/presentation/cubit/reader_settings_cubit.dart';
+import 'package:manara/features/quran/presentation/cubit/tafsir_cubit.dart';
 import 'package:manara/features/quran/presentation/utils/reader_palette.dart';
 import 'package:manara/features/quran/presentation/widgets/mushaf_frame.dart';
 import 'package:manara/features/quran/presentation/widgets/mushaf_text.dart';
 import 'package:manara/features/quran/presentation/widgets/page_pager.dart';
 import 'package:manara/features/quran/presentation/widgets/reader_header.dart';
+import 'package:manara/features/quran/presentation/widgets/reader_page_chrome.dart';
+import 'package:manara/features/quran/presentation/widgets/tafsir_content.dart';
+import 'package:manara/features/quran/presentation/widgets/tafsir_selector.dart';
 
 /// The Mushaf card: header, page content for the selected tab, and pager.
 class ReaderCard extends StatelessWidget {
@@ -41,6 +45,10 @@ class ReaderCard extends StatelessWidget {
             onNavigationTap: onNavigationTap,
             onSettingsTap: onSettingsTap,
             onPlayTap: () => showAppToast(context, 'ميزة الاستماع قريبًا'),
+            // The tafsir tab swaps the play button for the tafsir picker.
+            action: state.tab == ReaderTab.tafsir
+                ? const _TafsirPicker()
+                : null,
           ),
           Expanded(
             child: switch (state.tab) {
@@ -48,6 +56,7 @@ class ReaderCard extends StatelessWidget {
                 state: state,
                 settings: settings,
               ),
+              ReaderTab.tafsir => const TafsirContent(),
               _ => const _ComingSoon(),
             },
           ),
@@ -88,7 +97,7 @@ class _ReadingContent extends StatelessWidget {
     final page = state.page;
 
     if (state.status == ReaderStatus.failure) {
-      return _ErrorView(
+      return ReaderErrorView(
         message: state.errorMessage ?? 'حدث خطأ غير متوقع',
         onRetry: cubit.retry,
       );
@@ -100,14 +109,9 @@ class _ReadingContent extends StatelessWidget {
     final loading = state.status == ReaderStatus.loading;
     final horizontal = context.isMobile ? AppSpacing.md : AppSpacing.xxl;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      // Numbers ascend to the right in the pager, so dragging left goes on.
-      onHorizontalDragEnd: (details) {
-        final velocity = details.primaryVelocity ?? 0;
-        if (velocity < -300) cubit.nextPage();
-        if (velocity > 300) cubit.previousPage();
-      },
+    return PageSwipeDetector(
+      onNext: cubit.nextPage,
+      onPrevious: cubit.previousPage,
       child: Stack(
         children: [
           AnimatedOpacity(
@@ -134,7 +138,7 @@ class _ReadingContent extends StatelessWidget {
           PositionedDirectional(
             top: 0,
             end: AppSpacing.md,
-            child: _BookmarkRibbon(
+            child: BookmarkRibbon(
               bookmarked: state.isBookmarked,
               onTap: cubit.toggleBookmark,
             ),
@@ -152,53 +156,15 @@ class _ReadingContent extends StatelessWidget {
   }
 }
 
-class _BookmarkRibbon extends StatelessWidget {
-  const _BookmarkRibbon({required this.bookmarked, required this.onTap});
-
-  final bool bookmarked;
-  final VoidCallback onTap;
+class _TafsirPicker extends StatelessWidget {
+  const _TafsirPicker();
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onTap,
-      tooltip: bookmarked ? 'إزالة من المفضلة' : 'حفظ الصفحة',
-      constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
-      icon: AppIcon(
-        bookmarked ? AppIcons.bookmarkCheck : AppIcons.bookmarkAdd,
-        size: 32,
-        color: AppColors.green900,
-      ),
-    );
-  }
-}
-
-class _ErrorView extends StatelessWidget {
-  const _ErrorView({required this.message, required this.onRetry});
-
-  final String message;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsetsDirectional.all(AppSpacing.xl),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: AppTypography.bodyLargeMedium.copyWith(
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            AppButton(label: 'إعادة المحاولة', onPressed: onRetry),
-          ],
-        ),
-      ),
+    final source = context.select((TafsirCubit c) => c.state.source);
+    return TafsirSelector(
+      selected: source,
+      onSelected: context.read<TafsirCubit>().selectSource,
     );
   }
 }
