@@ -7,6 +7,7 @@ import 'package:manara/features/quran/domain/entities/reader_settings.dart';
 import 'package:manara/features/quran/domain/entities/surah.dart';
 import 'package:manara/features/quran/presentation/utils/quran_text_formatter.dart';
 import 'package:manara/features/quran/presentation/utils/reader_palette.dart';
+import 'package:manara/features/quran/presentation/widgets/surah_banner.dart';
 
 /// Renders the ayahs of a [MushafPage] as flowing, justified Quran text.
 ///
@@ -83,11 +84,9 @@ class _MushafTextState extends State<MushafText> {
       if (ayah.number == 1) {
         flush();
         children.add(
-          _SurahBanner(
+          SurahBanner(
+            surahNumber: ayah.surahNumber,
             name: _surahName(ayah.surahNumber),
-            // Al-Fatiha carries the basmala as its first ayah and At-Tawbah
-            // has none.
-            showBasmala: ayah.surahNumber != 1 && ayah.surahNumber != 9,
             style: textStyle,
           ),
         );
@@ -124,50 +123,6 @@ class _MushafTextState extends State<MushafText> {
       style: style,
       textAlign: TextAlign.justify,
       textDirection: TextDirection.rtl,
-    );
-  }
-}
-
-class _SurahBanner extends StatelessWidget {
-  const _SurahBanner({
-    required this.name,
-    required this.showBasmala,
-    required this.style,
-  });
-
-  final String name;
-  final bool showBasmala;
-  final TextStyle style;
-
-  static const _basmala = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
-
-  @override
-  Widget build(BuildContext context) {
-    final titleSize = (style.fontSize ?? 30) * 0.85;
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.xs),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsetsDirectional.symmetric(
-              vertical: AppSpacing.xxs,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.08),
-              borderRadius: AppRadius.smAll,
-              border: Border.all(color: AppColors.primary, width: 1.5),
-            ),
-            child: Text(
-              'سُورَةُ $name',
-              textAlign: TextAlign.center,
-              style: style.copyWith(fontSize: titleSize, height: 1.8),
-            ),
-          ),
-          if (showBasmala)
-            Text(_basmala, textAlign: TextAlign.center, style: style),
-        ],
-      ),
     );
   }
 }

@@ -188,11 +188,12 @@ class _Accordion extends StatelessWidget {
                       ),
                     ),
                     AnimatedRotation(
-                      turns: open ? -0.25 : 0,
+                      // A down arrow (never mirrored by text direction),
+                      // turned to point right while closed.
+                      turns: open ? 0 : -0.25,
                       duration: const Duration(milliseconds: 150),
-                      // Points toward the reading end, down when open.
                       child: const Icon(
-                        Icons.chevron_left,
+                        Icons.keyboard_arrow_down_rounded,
                         color: AppColors.green900,
                       ),
                     ),

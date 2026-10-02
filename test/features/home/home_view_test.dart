@@ -259,6 +259,30 @@ void main() {
     });
   });
 
+  // Android builds the first frame at width 0, before the window metrics
+  // arrive; no section may compute a negative size there.
+  testWidgets('survives the zero-width first frame, then lays out', (
+    tester,
+  ) async {
+    await pump(tester, const Size(0, 800));
+    expect(tester.takeException(), isNull);
+
+    await pump(tester, _mobile);
+    expect(tester.takeException(), isNull);
+    expect(find.text('كنوز منارة'), findsOneWidget);
+  });
+
+  // Many phones ship with a larger system font; fixed-size cards must
+  // still fit their content.
+  testWidgets('quick access cards fit a larger system font', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+
+    await pump(tester, _mobile);
+
+    expect(tester.takeException(), isNull);
+  });
+
   group('mobile', () {
     testWidgets('stacks the cards and uses the compact layouts', (
       tester,

@@ -51,6 +51,9 @@ abstract final class AppColors {
   /// Highlight behind the active ayah (Figma `#ADBCAC` at 75%).
   static const Color ayahHighlight = Color(0xBFADBCAC);
 
+  /// Tafsir paragraphs under each ayah (Figma `#122B1A`).
+  static const Color tafsirText = Color(0xFF122B1A);
+
   /// Circular icon holder on room cards.
   static const Color avatarBackground = Color(0xFFEDE8D9);
 

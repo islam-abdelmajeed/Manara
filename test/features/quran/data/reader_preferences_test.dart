@@ -3,6 +3,7 @@ import 'package:manara/features/quran/data/datasources/reader_preferences_local_
 import 'package:manara/features/quran/data/repositories/reader_preferences_repository_impl.dart';
 import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:manara/features/quran/domain/entities/reader_settings.dart';
+import 'package:manara/features/quran/domain/entities/tafsir.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<ReaderPreferencesRepositoryImpl> _repository([
@@ -112,6 +113,39 @@ void main() {
       final progress = _right<ReaderProgress>(await repository.recordVisit(3));
 
       expect(progress.bookmarkedPages, [9]);
+    });
+  });
+
+  group('tafsir source', () {
+    test('defaults to Al-Mukhtasar', () async {
+      final repository = await _repository();
+
+      expect(
+        _right<TafsirSource>(await repository.getTafsirSource()),
+        TafsirSource.mukhtasar,
+      );
+    });
+
+    test('persists the choice by name', () async {
+      final repository = await _repository();
+
+      await repository.saveTafsirSource(TafsirSource.ibnKathir);
+
+      expect(
+        _right<TafsirSource>(await repository.getTafsirSource()),
+        TafsirSource.ibnKathir,
+      );
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('reader.tafsir'), 'ibnKathir');
+    });
+
+    test('falls back to the default for an unknown stored name', () async {
+      final repository = await _repository({'reader.tafsir': 'tabari'});
+
+      expect(
+        _right<TafsirSource>(await repository.getTafsirSource()),
+        TafsirSource.mukhtasar,
+      );
     });
   });
 }

@@ -89,3 +89,60 @@ Map<String, dynamic> chaptersJson() => {
     },
   ],
 };
+
+/// Al-Mukhtasar on 2:6, verbatim from QuranEnc.
+const mukhtasar2v6 =
+    'إن الذين حقت عليهم كلمة الله بعدم الإيمان مستمرون على ضلالهم وعنادهم، '
+    'فإنذارك لهم وعدمه سواء.';
+
+/// Al-Mukhtasar on 2:7, verbatim from QuranEnc.
+const mukhtasar2v7 =
+    'لأن الله طبع على قلوبهم فأغلقها على ما فيها من باطل، وطبع على سمعهم فلا '
+    'يسمعون الحق سماع قَبول وانقياد، وجعل على أبصارهم غطاء فلا يبصرون الحق '
+    'مع وضوحه، ولهم في الآخرة عذاب عظيم.';
+
+/// A payload shaped like QuranEnc `/translation/sura/arabic_mokhtasar/2`,
+/// trimmed to two ayahs.
+Map<String, dynamic> mukhtasarSurah2Json() => {
+  'result': [
+    {
+      'id': '13',
+      'sura': '2',
+      'aya': '6',
+      'arabic_text': 'إِنَّ ٱلَّذِينَ كَفَرُوا۟',
+      'translation': mukhtasar2v6,
+      'footnotes': null,
+    },
+    {
+      'id': '14',
+      'sura': '2',
+      'aya': '7',
+      'arabic_text': 'خَتَمَ ٱللَّهُ',
+      'translation': mukhtasar2v7,
+      'footnotes': null,
+    },
+  ],
+};
+
+/// A payload shaped like Quran.com `/tafsirs/14/by_page/3` (placeholder
+/// text, the real one is HTML of the same shape).
+Map<String, dynamic> ibnKathirPage3Json() => {
+  'tafsirs': [
+    {
+      'id': 1,
+      'resource_id': 14,
+      'verse_key': '2:6',
+      'language_id': 9,
+      'text': '<p lang="ar" class="ar ">نص تجريبي أول</p>',
+      'slug': 'ar-tafsir-ibn-kathir',
+    },
+    {
+      'id': 2,
+      'resource_id': 14,
+      'verse_key': '2:7',
+      'language_id': 9,
+      'text': '<p lang="ar" class="ar ">نص تجريبي ثانٍ</p>',
+      'slug': 'ar-tafsir-ibn-kathir',
+    },
+  ],
+};

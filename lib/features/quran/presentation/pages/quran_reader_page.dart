@@ -6,6 +6,7 @@ import 'package:manara/core/theme/theme.dart';
 import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/quran/presentation/cubit/quran_reader_cubit.dart';
 import 'package:manara/features/quran/presentation/cubit/reader_settings_cubit.dart';
+import 'package:manara/features/quran/presentation/cubit/tafsir_cubit.dart';
 import 'package:manara/features/quran/presentation/widgets/mushaf_frame.dart';
 import 'package:manara/features/quran/presentation/widgets/navigation_panel.dart';
 import 'package:manara/features/quran/presentation/widgets/reader_card.dart';
@@ -26,13 +27,15 @@ class QuranReaderPage extends StatelessWidget {
               getIt<QuranReaderCubit>()..init(initialPage: initialPage),
         ),
         BlocProvider(create: (_) => getIt<ReaderSettingsCubit>()..load()),
+        BlocProvider(create: (_) => getIt<TafsirCubit>()),
       ],
       child: const QuranReaderView(),
     );
   }
 }
 
-/// Reader layout. Expects [QuranReaderCubit] and [ReaderSettingsCubit] above.
+/// Reader layout. Expects [QuranReaderCubit], [ReaderSettingsCubit] and
+/// [TafsirCubit] above.
 ///
 /// Desktop shows navigation / settings as a side panel next to the Mushaf;
 /// smaller screens open them as bottom sheets.

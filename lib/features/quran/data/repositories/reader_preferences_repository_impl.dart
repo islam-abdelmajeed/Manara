@@ -5,6 +5,7 @@ import 'package:manara/core/usecases/usecase.dart';
 import 'package:manara/features/quran/data/datasources/reader_preferences_local_data_source.dart';
 import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:manara/features/quran/domain/entities/reader_settings.dart';
+import 'package:manara/features/quran/domain/entities/tafsir.dart';
 import 'package:manara/features/quran/domain/repositories/reader_preferences_repository.dart';
 
 @LazySingleton(as: ReaderPreferencesRepository)
@@ -70,6 +71,19 @@ class ReaderPreferencesRepositoryImpl implements ReaderPreferencesRepository {
       final updated = current.copyWith(bookmarkedPages: bookmarks);
       await _local.writeProgress(updated);
       return updated;
+    });
+  }
+
+  @override
+  ResultFuture<TafsirSource> getTafsirSource() {
+    return guard(() async => _local.readTafsirSource());
+  }
+
+  @override
+  ResultFuture<Unit> saveTafsirSource(TafsirSource source) {
+    return guard(() async {
+      await _local.writeTafsirSource(source);
+      return unit;
     });
   }
 }

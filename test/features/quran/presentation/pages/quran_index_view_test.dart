@@ -248,6 +248,23 @@ void main() {
     });
   });
 
+  // Many phones use a larger system font; nothing may overflow.
+  group('large system font', () {
+    for (final scale in [1.15, 1.3]) {
+      for (final tab in QuranIndexTab.values) {
+        testWidgets('${tab.name} fits at ${scale}x', (tester) async {
+          tester.platformDispatcher.textScaleFactorTestValue = scale;
+          addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+          when(() => cubit.state).thenReturn(loaded(tab: tab));
+
+          await pump(tester, _mobile);
+
+          expect(tester.takeException(), isNull);
+        });
+      }
+    }
+  });
+
   group('mobile', () {
     testWidgets('stacks the sections with two cards per row', (tester) async {
       await pump(tester, _mobile);

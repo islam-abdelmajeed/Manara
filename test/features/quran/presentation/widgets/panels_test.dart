@@ -44,6 +44,7 @@ void main() {
     Future<void> pump(
       WidgetTester tester, {
       ReaderProgress progress = const ReaderProgress(),
+      Size size = const Size(500, 1600),
     }) async {
       when(() => cubit.state).thenReturn(
         QuranReaderState(
@@ -64,8 +65,40 @@ void main() {
             ),
           ),
         ),
-        size: const Size(500, 1600),
+        size: size,
       );
+    }
+
+    // The panel is a bottom sheet on phones, which often use a larger font.
+    // The surahs section is open on arrival; each other one is opened alone.
+    for (final section in [
+      null,
+      'الأجزاء',
+      'الصفحات',
+      'قُرئ مؤخرًا',
+      'المفضلة',
+    ]) {
+      testWidgets('${section ?? 'السور'} fits a phone with a larger font', (
+        tester,
+      ) async {
+        tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+        addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+        await pump(
+          tester,
+          progress: const ReaderProgress(
+            recentPages: [2],
+            bookmarkedPages: [3],
+          ),
+          size: const Size(360, 1600),
+        );
+
+        if (section != null) {
+          await tester.tap(find.text(section));
+          await tester.pumpAndSettle();
+        }
+
+        expect(tester.takeException(), isNull);
+      });
     }
 
     testWidgets('lists the surahs with Figma style subtitles', (tester) async {
@@ -75,6 +108,35 @@ void main() {
       expect(find.text('الفاتحة'), findsOneWidget);
       expect(find.text('مكية – 7 آيات'), findsOneWidget);
       expect(find.text('مدنية – 286 آية'), findsOneWidget);
+    });
+
+    testWidgets('section arrows point right, and down when open', (
+      tester,
+    ) async {
+      await pump(tester);
+
+      // A down arrow that ignores text direction, rotated per state.
+      final arrows = tester
+          .widgetList<AnimatedRotation>(find.byType(AnimatedRotation))
+          .toList();
+      expect(arrows, hasLength(5));
+      expect(arrows.first.turns, 0); // السور starts open
+      expect(arrows.skip(1).map((a) => a.turns), everyElement(-0.25));
+      for (final arrow in arrows) {
+        final icon = arrow.child! as Icon;
+        expect(icon.icon, Icons.keyboard_arrow_down_rounded);
+        expect(icon.icon!.matchTextDirection, isFalse);
+      }
+
+      await tester.tap(find.text('الأجزاء'));
+      await tester.pumpAndSettle();
+      expect(
+        tester
+            .widgetList<AnimatedRotation>(find.byType(AnimatedRotation))
+            .elementAt(1)
+            .turns,
+        0,
+      );
     });
 
     testWidgets('close button calls onClose', (tester) async {
@@ -189,7 +251,10 @@ void main() {
       ).thenAnswer((_) async {});
     });
 
-    Future<void> pump(WidgetTester tester) {
+    Future<void> pump(
+      WidgetTester tester, {
+      Size size = const Size(500, 1400),
+    }) {
       return tester.pumpScreen(
         Scaffold(
           body: BlocProvider<ReaderSettingsCubit>.value(
@@ -197,9 +262,18 @@ void main() {
             child: SettingsPanel(onClose: () => closed++),
           ),
         ),
-        size: const Size(500, 1400),
+        size: size,
       );
     }
+
+    testWidgets('fits a phone with a larger font', (tester) async {
+      tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+
+      await pump(tester, size: const Size(360, 1400));
+
+      expect(tester.takeException(), isNull);
+    });
 
     testWidgets('shows every Figma section', (tester) async {
       await pump(tester);
