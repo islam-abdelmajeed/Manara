@@ -2,8 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:manara/core/router/app_routes.dart';
 import 'package:manara/core/theme/theme.dart';
 import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_location.dart';
@@ -11,6 +9,7 @@ import 'package:manara/features/prayer/domain/entities/qibla.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
 import 'package:manara/features/prayer/presentation/utils/prayer_format.dart';
 import 'package:manara/features/prayer/presentation/widgets/prayer_layout.dart';
+import 'package:manara/features/prayer/presentation/widgets/use_my_location_button.dart';
 
 /// "اتجاه القبلة": the bearing to the Kaaba on a dial with north up, and
 /// the distance. Calculated on the device, so it works offline.
@@ -53,11 +52,7 @@ class QiblaSection extends StatelessWidget {
           runSpacing: AppSpacing.xs,
           children: [
             // Reading order as in Figma: "use my location" first.
-            AppButton.secondary(
-              label: 'استخدم موقعي',
-              icon: AppIcons.markerPin,
-              onPressed: () => context.go(AppRoutes.prayerCities()),
-            ),
+            const UseMyLocationButton(),
             AppButton(
               label: 'ابدأ البوصلة الحية',
               icon: AppIcons.compass,

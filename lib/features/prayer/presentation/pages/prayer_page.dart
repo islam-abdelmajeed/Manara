@@ -4,6 +4,7 @@ import 'package:manara/core/di/injection.dart';
 import 'package:manara/core/theme/theme.dart';
 import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/prayer/presentation/cubit/city_search_cubit.dart';
+import 'package:manara/features/prayer/presentation/cubit/device_location_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/nearby_cities_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_month_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
@@ -51,6 +52,7 @@ class PrayerPage extends StatelessWidget {
                 ..load(context.read<PrayerTimesCubit>().state.location),
         ),
         BlocProvider(create: (_) => getIt<PrayerMonthCubit>()),
+        BlocProvider(create: (_) => getIt<DeviceLocationCubit>()),
         BlocProvider(create: (_) => _citySearch()),
       ],
       child: PrayerView(tab: tab, showQibla: showQibla),
@@ -58,8 +60,8 @@ class PrayerPage extends StatelessWidget {
   }
 }
 
-/// Expects [PrayerTimesCubit], [NearbyCitiesCubit], [PrayerMonthCubit] and
-/// [CitySearchCubit] above it.
+/// Expects [PrayerTimesCubit], [NearbyCitiesCubit], [PrayerMonthCubit],
+/// [CitySearchCubit] and [DeviceLocationCubit] above it.
 class PrayerView extends StatelessWidget {
   const PrayerView({
     required this.tab,

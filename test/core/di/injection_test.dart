@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:manara/core/di/injection.dart';
 import 'package:manara/features/home/presentation/cubit/home_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/city_search_cubit.dart';
+import 'package:manara/features/prayer/presentation/cubit/device_location_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/nearby_cities_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_alerts_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_month_cubit.dart';
@@ -25,5 +26,6 @@ void main() {
     expect(getIt<PrayerMonthCubit>(), isA<PrayerMonthCubit>());
     expect(getIt<CitySearchCubit>(), isA<CitySearchCubit>());
     expect(getIt<PrayerAlertsCubit>(), isA<PrayerAlertsCubit>());
+    expect(getIt<DeviceLocationCubit>(), isA<DeviceLocationCubit>());
   });
 }

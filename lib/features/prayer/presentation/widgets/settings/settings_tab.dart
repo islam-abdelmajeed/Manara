@@ -11,6 +11,7 @@ import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dar
 import 'package:manara/features/prayer/presentation/utils/prayer_labels.dart';
 import 'package:manara/features/prayer/presentation/widgets/prayer_form.dart';
 import 'package:manara/features/prayer/presentation/widgets/prayer_layout.dart';
+import 'package:manara/features/prayer/presentation/widgets/use_my_location_button.dart';
 
 /// "الإعدادات" (Figma "الصلاة- اعدادات"): the city, how times are
 /// calculated, the Hijri offset and per-prayer minute adjustments. Changes
@@ -84,6 +85,8 @@ class _LocationCardState extends State<_LocationCard> {
       subtitle: 'المكان الذي تُحسب له مواقيت اليوم.',
       children: [
         _CurrentCity(location: location),
+        const SizedBox(height: AppSpacing.sm),
+        const UseMyLocationButton(expand: true),
         const SizedBox(height: AppSpacing.md),
         const Divider(color: AppColors.beige500, height: 1),
         const SizedBox(height: AppSpacing.md),

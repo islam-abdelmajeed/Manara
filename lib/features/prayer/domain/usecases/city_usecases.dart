@@ -1,10 +1,13 @@
 import 'package:equatable/equatable.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:manara/core/error/failures.dart';
 import 'package:manara/core/usecases/usecase.dart';
 import 'package:manara/core/utils/arabic_search.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_location.dart';
 import 'package:manara/features/prayer/domain/entities/qibla.dart';
 import 'package:manara/features/prayer/domain/repositories/city_repository.dart';
+import 'package:manara/features/prayer/domain/repositories/device_location_repository.dart';
 
 /// A city and its great-circle distance from somewhere.
 class CityDistance extends Equatable {
@@ -55,6 +58,58 @@ class GetNearbyCities
             ),
       ]..sort((a, b) => a.distanceKm.compareTo(b.distanceKm));
       return distances.take(params.count).toList();
+    });
+  }
+}
+
+/// The device's own position as a location: its coordinates (to about 100
+/// m), named after the nearest bundled city ("قرب الجيزة") and taking that
+/// city's country and zone. Far from every city it is "موقعي الحالي".
+@injectable
+class LocateDevice implements UseCase<PrayerLocation, NoParams> {
+  const LocateDevice(this._device, this._cities);
+
+  final DeviceLocationRepository _device;
+  final CityRepository _cities;
+
+  /// Beyond this, "near" the city would mislead.
+  static const double nearKm = 100;
+
+  @override
+  ResultFuture<PrayerLocation> call(NoParams params) async {
+    final position = await _device.current();
+    return position.fold(Left.new, (position) async {
+      double round(double v) => (v * 1000).round() / 1000;
+      final latitude = round(position.latitude);
+      final longitude = round(position.longitude);
+      final cities = await _cities.getCities();
+      return cities.flatMap((cities) {
+        if (cities.isEmpty) {
+          return const Left(LocationFailure(LocationProblem.unavailable));
+        }
+        double distance(PrayerLocation c) => Qibla.distanceKmBetween(
+          latitude,
+          longitude,
+          c.latitude,
+          c.longitude,
+        );
+        final nearest = cities.reduce(
+          (a, b) => distance(a) <= distance(b) ? a : b,
+        );
+        final near = distance(nearest) <= nearKm;
+        return Right(
+          PrayerLocation(
+            id: PrayerLocation.deviceId,
+            name: near ? 'قرب ${nearest.name}' : 'موقعي الحالي',
+            nameEn: near ? 'Near ${nearest.nameEn}' : 'My location',
+            country: nearest.country,
+            countryCode: nearest.countryCode,
+            latitude: latitude,
+            longitude: longitude,
+            timeZone: nearest.timeZone,
+          ),
+        );
+      });
     });
   }
 }

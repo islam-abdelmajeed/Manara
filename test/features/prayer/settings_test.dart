@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:manara/core/error/failures.dart';
 import 'package:manara/core/theme/app_theme.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_location.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_settings.dart';
@@ -11,6 +12,7 @@ import 'package:manara/features/prayer/domain/entities/prayer_times.dart';
 import 'package:manara/features/prayer/domain/repositories/city_repository.dart';
 import 'package:manara/features/prayer/domain/usecases/city_usecases.dart';
 import 'package:manara/features/prayer/presentation/cubit/city_search_cubit.dart';
+import 'package:manara/features/prayer/presentation/cubit/device_location_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/nearby_cities_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
 import 'package:manara/features/prayer/presentation/pages/prayer_page.dart';
@@ -31,6 +33,9 @@ class MockCitySearchCubit extends MockCubit<CitySearchState>
 
 class MockNearbyCitiesCubit extends MockCubit<NearbyCitiesState>
     implements NearbyCitiesCubit {}
+
+class MockDeviceLocationCubit extends MockCubit<DeviceLocationState>
+    implements DeviceLocationCubit {}
 
 /// From assets/data/cities.json.
 const _alexandria = PrayerLocation(
@@ -105,11 +110,16 @@ void main() {
     late MockPrayerTimesCubit prayer;
     late MockCitySearchCubit search;
     late MockNearbyCitiesCubit nearby;
+    late MockDeviceLocationCubit device;
 
     setUp(() {
       prayer = MockPrayerTimesCubit();
       search = MockCitySearchCubit();
       nearby = MockNearbyCitiesCubit();
+      device = MockDeviceLocationCubit();
+      when(() => device.state).thenReturn(const DeviceLocationState());
+      when(() => device.locate()).thenAnswer((_) async {});
+      when(() => device.openSettings()).thenAnswer((_) async {});
       when(() => prayer.state).thenReturn(
         PrayerTimesState(
           status: PrayerTimesStatus.success,
@@ -140,6 +150,7 @@ void main() {
               BlocProvider<PrayerTimesCubit>.value(value: prayer),
               BlocProvider<CitySearchCubit>.value(value: search),
               BlocProvider<NearbyCitiesCubit>.value(value: nearby),
+              BlocProvider<DeviceLocationCubit>.value(value: device),
             ],
             child: PrayerView(
               tab: PrayerTab.settings,
@@ -150,6 +161,32 @@ void main() {
       );
       await tester.pump();
     }
+
+    testWidgets('"use my location" locates the device', (tester) async {
+      await pump(tester, const Size(390, 3000));
+      expect(find.text('فتح إعدادات الجهاز'), findsNothing);
+      await tester.tap(find.text('استخدم موقعي'));
+      verify(() => device.locate()).called(1);
+    });
+
+    testWidgets('a blocked permission links to the device settings', (
+      tester,
+    ) async {
+      when(() => device.state).thenReturn(
+        const DeviceLocationState(
+          status: DeviceLocationStatus.failure,
+          failure: LocationFailure(LocationProblem.deniedForever),
+        ),
+      );
+      await pump(tester, const Size(390, 3000));
+      final link = find.ancestor(
+        of: find.text('فتح إعدادات الجهاز'),
+        matching: find.byType(TextButton),
+      );
+      expect(tester.getSize(link).height, greaterThanOrEqualTo(44));
+      await tester.tap(link);
+      verify(() => device.openSettings()).called(1);
+    });
 
     testWidgets('shows the city, the calculation and the adjustments', (
       tester,

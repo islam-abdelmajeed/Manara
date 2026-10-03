@@ -26,8 +26,13 @@ class PrayerLocation extends Equatable {
     timeZone: 'Africa/Cairo',
   );
 
-  /// GeoNames id.
+  /// [id] of the device's own position ("استخدم موقعي").
+  static const int deviceId = 0;
+
+  /// GeoNames id, or [deviceId].
   final int id;
+
+  bool get isDevice => id == deviceId;
 
   /// Arabic city and country names.
   final String name;

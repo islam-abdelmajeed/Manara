@@ -11,6 +11,8 @@ import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_location.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_times.dart';
 import 'package:manara/features/prayer/domain/usecases/city_usecases.dart';
+import 'package:manara/core/error/failures.dart';
+import 'package:manara/features/prayer/presentation/cubit/device_location_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/nearby_cities_cubit.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
 import 'package:manara/features/prayer/presentation/pages/prayer_page.dart';
@@ -27,6 +29,9 @@ class MockPrayerTimesCubit extends MockCubit<PrayerTimesState>
 
 class MockNearbyCitiesCubit extends MockCubit<NearbyCitiesState>
     implements NearbyCitiesCubit {}
+
+class MockDeviceLocationCubit extends MockCubit<DeviceLocationState>
+    implements DeviceLocationCubit {}
 
 const _desktop = Size(1440, 2600);
 const _mobile = Size(390, 4200);
@@ -53,6 +58,7 @@ PrayerTimes _withFetchedAt(PrayerTimes t, DateTime fetchedAt) => PrayerTimes(
 void main() {
   late MockPrayerTimesCubit prayer;
   late MockNearbyCitiesCubit nearby;
+  late MockDeviceLocationCubit device;
 
   /// 13:00 in Cairo on 2 Oct 2026: Asr (16:08) is next, 3 h 8 min away.
   var now = cairo(10, 2, 13);
@@ -63,6 +69,9 @@ void main() {
     now = cairo(10, 2, 13);
     prayer = MockPrayerTimesCubit();
     nearby = MockNearbyCitiesCubit();
+    device = MockDeviceLocationCubit();
+    when(() => device.state).thenReturn(const DeviceLocationState());
+    when(() => device.locate()).thenAnswer((_) async {});
     when(() => prayer.state).thenReturn(
       PrayerTimesState(
         status: PrayerTimesStatus.success,
@@ -97,6 +106,7 @@ void main() {
       providers: [
         BlocProvider<PrayerTimesCubit>.value(value: prayer),
         BlocProvider<NearbyCitiesCubit>.value(value: nearby),
+        BlocProvider<DeviceLocationCubit>.value(value: device),
       ],
       child: PrayerView(tab: t, clock: () => now),
     );
@@ -341,13 +351,62 @@ void main() {
       expect(find.text('SETTINGS cities=all'), findsOneWidget);
     });
 
-    testWidgets('"use my location" opens the city list', (tester) async {
+    testWidgets('"use my location" locates the device', (tester) async {
       await pump(tester, _desktop);
 
       await tester.ensureVisible(find.text('استخدم موقعي'));
       await tester.tap(find.text('استخدم موقعي'));
-      await tester.pumpAndSettle();
-      expect(find.text('SETTINGS cities=all'), findsOneWidget);
+      verify(() => device.locate()).called(1);
+    });
+
+    testWidgets('the located position becomes the location', (tester) async {
+      const here = PrayerLocation(
+        id: PrayerLocation.deviceId,
+        name: 'قرب الجيزة',
+        nameEn: 'Near Giza',
+        country: 'مصر',
+        countryCode: 'EG',
+        latitude: 30.001,
+        longitude: 31.2,
+        timeZone: 'Africa/Cairo',
+      );
+      whenListen(
+        device,
+        Stream.fromIterable(const [
+          DeviceLocationState(status: DeviceLocationStatus.locating),
+          DeviceLocationState(
+            status: DeviceLocationStatus.located,
+            location: here,
+          ),
+        ]),
+        initialState: const DeviceLocationState(),
+      );
+      await pump(tester, _desktop);
+      await tester.pump();
+
+      verify(() => prayer.changeLocation(here)).called(1);
+      expect(find.text('تم تحديد موقعك: قرب الجيزة'), findsOneWidget);
+    });
+
+    testWidgets('a refusal says what to do instead', (tester) async {
+      whenListen(
+        device,
+        Stream.fromIterable(const [
+          DeviceLocationState(
+            status: DeviceLocationStatus.failure,
+            failure: LocationFailure(LocationProblem.denied),
+          ),
+        ]),
+        initialState: const DeviceLocationState(),
+      );
+      await pump(tester, _desktop);
+      await tester.pump();
+
+      verifyNever(() => prayer.changeLocation(any()));
+      expect(
+        find.text('لم يُسمح بمعرفة موقعك؛ يمكنك اختيار مدينتك من القائمة.'),
+        findsOneWidget,
+      );
     });
 
     testWidgets('the live compass is not available yet', (tester) async {

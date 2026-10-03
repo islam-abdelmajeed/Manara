@@ -12,6 +12,7 @@
 
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter/services.dart' as _i281;
+import 'package:geolocator/geolocator.dart' as _i699;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:manara/core/di/register_module.dart' as _i530;
@@ -34,12 +35,16 @@ import 'package:manara/features/prayer/data/datasources/prayer_times_remote_data
     as _i945;
 import 'package:manara/features/prayer/data/repositories/city_repository_impl.dart'
     as _i1056;
+import 'package:manara/features/prayer/data/repositories/device_location_repository_impl.dart'
+    as _i206;
 import 'package:manara/features/prayer/data/repositories/prayer_preferences_repository_impl.dart'
     as _i858;
 import 'package:manara/features/prayer/data/repositories/prayer_times_repository_impl.dart'
     as _i598;
 import 'package:manara/features/prayer/domain/repositories/city_repository.dart'
     as _i591;
+import 'package:manara/features/prayer/domain/repositories/device_location_repository.dart'
+    as _i223;
 import 'package:manara/features/prayer/domain/repositories/prayer_preferences_repository.dart'
     as _i497;
 import 'package:manara/features/prayer/domain/repositories/prayer_times_repository.dart'
@@ -54,6 +59,8 @@ import 'package:manara/features/prayer/presentation/cubit/alert_notifier.dart'
     as _i309;
 import 'package:manara/features/prayer/presentation/cubit/city_search_cubit.dart'
     as _i370;
+import 'package:manara/features/prayer/presentation/cubit/device_location_cubit.dart'
+    as _i990;
 import 'package:manara/features/prayer/presentation/cubit/nearby_cities_cubit.dart'
     as _i253;
 import 'package:manara/features/prayer/presentation/cubit/prayer_alerts_cubit.dart'
@@ -107,6 +114,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
+    final geolocatorModule = _$GeolocatorModule();
     final alertNotifierModule = _$AlertNotifierModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => registerModule.prefs,
@@ -115,6 +123,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i281.AssetBundle>(() => registerModule.assetBundle);
     gh.lazySingleton<_i53.LocalNotifications>(() => _i53.LocalNotifications());
+    gh.lazySingleton<_i699.GeolocatorPlatform>(
+      () => geolocatorModule.geolocator,
+    );
     gh.lazySingleton<_i359.QuranRemoteDataSource>(
       () => _i359.QuranRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
@@ -126,6 +137,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i227.TafsirRemoteDataSource>(
       () => _i227.TafsirRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i223.DeviceLocationRepository>(
+      () => _i206.DeviceLocationRepositoryImpl(gh<_i699.GeolocatorPlatform>()),
     );
     gh.lazySingleton<_i146.HadithRepository>(
       () => _i949.HadithRepositoryImpl(gh<_i970.DailyHadithLocalDataSource>()),
@@ -169,6 +183,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i591.CityRepository>(
       () => _i1056.CityRepositoryImpl(gh<_i695.CityCatalogDataSource>()),
+    );
+    gh.factory<_i990.LocateDevice>(
+      () => _i990.LocateDevice(
+        gh<_i223.DeviceLocationRepository>(),
+        gh<_i591.CityRepository>(),
+      ),
     );
     gh.factory<_i462.GetPrayerMonth>(
       () => _i462.GetPrayerMonth(gh<_i742.PrayerTimesRepository>()),
@@ -231,6 +251,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i370.CitySearchCubit>(
       () => _i370.CitySearchCubit(gh<_i990.SearchCities>()),
+    );
+    gh.factory<_i990.DeviceLocationCubit>(
+      () => _i990.DeviceLocationCubit(
+        gh<_i990.LocateDevice>(),
+        gh<_i223.DeviceLocationRepository>(),
+      ),
     );
     gh.factory<_i917.ReaderSettingsCubit>(
       () => _i917.ReaderSettingsCubit(
@@ -301,5 +327,7 @@ extension GetItInjectableX on _i174.GetIt {
 }
 
 class _$RegisterModule extends _i530.RegisterModule {}
+
+class _$GeolocatorModule extends _i206.GeolocatorModule {}
 
 class _$AlertNotifierModule extends _i309.AlertNotifierModule {}
