@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Prayer times (Aladhan) and the Quran text/tafsir are fetched online;
+         the debug manifest has this permission, release builds need it here. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:label="منارة"
         android:name="${applicationName}"
