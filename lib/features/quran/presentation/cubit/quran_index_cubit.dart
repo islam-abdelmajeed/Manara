@@ -2,12 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:manara/core/usecases/usecase.dart';
+import 'package:manara/core/utils/arabic_search.dart';
 import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:manara/features/quran/domain/entities/surah.dart';
 import 'package:manara/features/quran/domain/usecases/get_mushaf_page.dart';
 import 'package:manara/features/quran/domain/usecases/get_surahs.dart';
 import 'package:manara/features/quran/domain/usecases/reader_progress_usecases.dart';
-import 'package:manara/features/quran/presentation/utils/arabic_search.dart';
 
 part 'quran_index_state.dart';
 

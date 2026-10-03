@@ -1,0 +1,1612 @@
+[
+ {
+  "id": 292223,
+  "name": "دبي",
+  "nameEn": "Dubai",
+  "country": "الإمارات العربية المتحدة",
+  "countryCode": "AE",
+  "lat": 25.07725,
+  "lng": 55.30927,
+  "timeZone": "Asia/Dubai"
+ },
+ {
+  "id": 292968,
+  "name": "أبوظبي",
+  "nameEn": "Abu Dhabi",
+  "country": "الإمارات العربية المتحدة",
+  "countryCode": "AE",
+  "lat": 24.45118,
+  "lng": 54.39696,
+  "timeZone": "Asia/Dubai"
+ },
+ {
+  "id": 292672,
+  "name": "الشارقة",
+  "nameEn": "Sharjah",
+  "country": "الإمارات العربية المتحدة",
+  "countryCode": "AE",
+  "lat": 25.3342,
+  "lng": 55.41221,
+  "timeZone": "Asia/Dubai"
+ },
+ {
+  "id": 1138958,
+  "name": "كابل",
+  "nameEn": "Kabul",
+  "country": "أفغانستان",
+  "countryCode": "AF",
+  "lat": 34.52813,
+  "lng": 69.17233,
+  "timeZone": "Asia/Kabul"
+ },
+ {
+  "id": 3183875,
+  "name": "تيرانا",
+  "nameEn": "Tirana",
+  "country": "ألبانيا",
+  "countryCode": "AL",
+  "lat": 41.32744,
+  "lng": 19.81866,
+  "timeZone": "Europe/Tirane"
+ },
+ {
+  "id": 2240449,
+  "name": "لواندا",
+  "nameEn": "Luanda",
+  "country": "أنجولا",
+  "countryCode": "AO",
+  "lat": -8.83682,
+  "lng": 13.23432,
+  "timeZone": "Africa/Luanda"
+ },
+ {
+  "id": 3435910,
+  "name": "بوينس آيرس",
+  "nameEn": "Buenos Aires",
+  "country": "الأرجنتين",
+  "countryCode": "AR",
+  "lat": -34.61315,
+  "lng": -58.37723,
+  "timeZone": "America/Argentina/Buenos_Aires"
+ },
+ {
+  "id": 2172517,
+  "name": "كانبرا",
+  "nameEn": "Canberra",
+  "country": "أستراليا",
+  "countryCode": "AU",
+  "lat": -35.28346,
+  "lng": 149.12807,
+  "timeZone": "Australia/Sydney"
+ },
+ {
+  "id": 587084,
+  "name": "باكو",
+  "nameEn": "Baku",
+  "country": "أذربيجان",
+  "countryCode": "AZ",
+  "lat": 40.37767,
+  "lng": 49.89201,
+  "timeZone": "Asia/Baku"
+ },
+ {
+  "id": 1185241,
+  "name": "دكا",
+  "nameEn": "Dhaka",
+  "country": "بنغلاديش",
+  "countryCode": "BD",
+  "lat": 23.7104,
+  "lng": 90.40744,
+  "timeZone": "Asia/Dhaka"
+ },
+ {
+  "id": 1205733,
+  "name": "شيتاغونغ",
+  "nameEn": "Chattogram",
+  "country": "بنغلاديش",
+  "countryCode": "BD",
+  "lat": 22.3384,
+  "lng": 91.83168,
+  "timeZone": "Asia/Dhaka"
+ },
+ {
+  "id": 2357048,
+  "name": "واغادوغو",
+  "nameEn": "Ouagadougou",
+  "country": "بوركينا فاسو",
+  "countryCode": "BF",
+  "lat": 12.36566,
+  "lng": -1.53388,
+  "timeZone": "Africa/Ouagadougou"
+ },
+ {
+  "id": 290340,
+  "name": "المنامة",
+  "nameEn": "Manama",
+  "country": "البحرين",
+  "countryCode": "BH",
+  "lat": 26.22787,
+  "lng": 50.58565,
+  "timeZone": "Asia/Bahrain"
+ },
+ {
+  "id": 2392087,
+  "name": "بورتو نوفو",
+  "nameEn": "Porto-Novo",
+  "country": "بنين",
+  "countryCode": "BJ",
+  "lat": 6.49646,
+  "lng": 2.60359,
+  "timeZone": "Africa/Porto-Novo"
+ },
+ {
+  "id": 1820906,
+  "name": "بندر سري بكاوان",
+  "nameEn": "Bandar Seri Begawan",
+  "country": "بروناي",
+  "countryCode": "BN",
+  "lat": 4.89035,
+  "lng": 114.94006,
+  "timeZone": "Asia/Brunei"
+ },
+ {
+  "id": 3448439,
+  "name": "ساو باولو",
+  "nameEn": "São Paulo",
+  "country": "البرازيل",
+  "countryCode": "BR",
+  "lat": -23.5475,
+  "lng": -46.63611,
+  "timeZone": "America/Sao_Paulo"
+ },
+ {
+  "id": 3469058,
+  "name": "برازيليا",
+  "nameEn": "Brasília",
+  "country": "البرازيل",
+  "countryCode": "BR",
+  "lat": -15.77972,
+  "lng": -47.92972,
+  "timeZone": "America/Sao_Paulo"
+ },
+ {
+  "id": 6094817,
+  "name": "أوتاوا",
+  "nameEn": "Ottawa",
+  "country": "كندا",
+  "countryCode": "CA",
+  "lat": 45.41117,
+  "lng": -75.69812,
+  "timeZone": "America/Toronto"
+ },
+ {
+  "id": 2314302,
+  "name": "كينشاسا",
+  "nameEn": "Kinshasa",
+  "country": "الكونغو - كينشاسا",
+  "countryCode": "CD",
+  "lat": -4.32758,
+  "lng": 15.31357,
+  "timeZone": "Africa/Kinshasa"
+ },
+ {
+  "id": 2293538,
+  "name": "أبيدجان",
+  "nameEn": "Abidjan",
+  "country": "كوت ديفوار",
+  "countryCode": "CI",
+  "lat": 5.35444,
+  "lng": -4.00167,
+  "timeZone": "Africa/Abidjan"
+ },
+ {
+  "id": 2279755,
+  "name": "ياموسوكرو",
+  "nameEn": "Yamoussoukro",
+  "country": "كوت ديفوار",
+  "countryCode": "CI",
+  "lat": 6.82055,
+  "lng": -5.27674,
+  "timeZone": "Africa/Abidjan"
+ },
+ {
+  "id": 2220957,
+  "name": "ياوندي",
+  "nameEn": "Yaoundé",
+  "country": "الكاميرون",
+  "countryCode": "CM",
+  "lat": 3.86667,
+  "lng": 11.51667,
+  "timeZone": "Africa/Douala"
+ },
+ {
+  "id": 1816670,
+  "name": "بكين",
+  "nameEn": "Beijing",
+  "country": "الصين",
+  "countryCode": "CN",
+  "lat": 39.9075,
+  "lng": 116.39723,
+  "timeZone": "Asia/Shanghai"
+ },
+ {
+  "id": 3688689,
+  "name": "بوغوتا",
+  "nameEn": "Bogotá",
+  "country": "كولومبيا",
+  "countryCode": "CO",
+  "lat": 4.60971,
+  "lng": -74.08175,
+  "timeZone": "America/Bogota"
+ },
+ {
+  "id": 2950159,
+  "name": "برلين",
+  "nameEn": "Berlin",
+  "country": "ألمانيا",
+  "countryCode": "DE",
+  "lat": 52.52437,
+  "lng": 13.41053,
+  "timeZone": "Europe/Berlin"
+ },
+ {
+  "id": 223817,
+  "name": "جيبوتي",
+  "nameEn": "Djibouti",
+  "country": "جيبوتي",
+  "countryCode": "DJ",
+  "lat": 11.58901,
+  "lng": 43.14503,
+  "timeZone": "Africa/Djibouti"
+ },
+ {
+  "id": 2507480,
+  "name": "الجزائر",
+  "nameEn": "Algiers",
+  "country": "الجزائر",
+  "countryCode": "DZ",
+  "lat": 36.73225,
+  "lng": 3.08746,
+  "timeZone": "Africa/Algiers"
+ },
+ {
+  "id": 360630,
+  "name": "القاهرة",
+  "nameEn": "Cairo",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 30.06263,
+  "lng": 31.24967,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 361058,
+  "name": "الإسكندرية",
+  "nameEn": "Alexandria",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.20176,
+  "lng": 29.91582,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 360995,
+  "name": "الجيزة",
+  "nameEn": "Giza",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 30.00944,
+  "lng": 31.20861,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 358619,
+  "name": "بور سعيد",
+  "nameEn": "Port Said",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.26531,
+  "lng": 32.3019,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 359796,
+  "name": "السويس",
+  "nameEn": "Suez",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 29.97371,
+  "lng": 32.52627,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 360761,
+  "name": "المنصورة",
+  "nameEn": "Al Mansurah",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.03637,
+  "lng": 31.38069,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 347497,
+  "name": "طنطا",
+  "nameEn": "Tanta",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 30.78847,
+  "lng": 31.00192,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 359783,
+  "name": "أسيوط",
+  "nameEn": "Assiut",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 27.18096,
+  "lng": 31.18368,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 361320,
+  "name": "الفيوم",
+  "nameEn": "Al Fayyum",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 29.30995,
+  "lng": 30.8418,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 359493,
+  "name": "الزقازيق",
+  "nameEn": "Zagazig",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 30.58768,
+  "lng": 31.502,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 361055,
+  "name": "الإسماعيلية",
+  "nameEn": "Ismailia",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 30.60427,
+  "lng": 32.27225,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 360502,
+  "name": "الأقصر",
+  "nameEn": "Luxor",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 25.69893,
+  "lng": 32.6421,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 359792,
+  "name": "أسوان",
+  "nameEn": "Aswān",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 24.09082,
+  "lng": 32.89942,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 358448,
+  "name": "دمنهور",
+  "nameEn": "Damanhur",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.03408,
+  "lng": 30.46823,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 358048,
+  "name": "دمياط",
+  "nameEn": "Damietta",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.41648,
+  "lng": 31.81332,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 360686,
+  "name": "المنيا",
+  "nameEn": "Minya",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 28.09193,
+  "lng": 30.75813,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 359173,
+  "name": "بني سويف",
+  "nameEn": "Banī Suwayf",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 29.07441,
+  "lng": 31.09785,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 349158,
+  "name": "شبين الكوم",
+  "nameEn": "Shibīn al Kawm",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 30.55258,
+  "lng": 31.00904,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 347796,
+  "name": "سوهاج",
+  "nameEn": "Sohag",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 26.55695,
+  "lng": 31.69478,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 350550,
+  "name": "قنا",
+  "nameEn": "Qina",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 26.16418,
+  "lng": 32.72671,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 361291,
+  "name": "الغردقة",
+  "nameEn": "Hurghada",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 27.25738,
+  "lng": 33.81291,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 361546,
+  "name": "العريش",
+  "nameEn": "Arīsh",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.13159,
+  "lng": 33.79844,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 354502,
+  "name": "كفر الشيخ",
+  "nameEn": "Kafr ash Shaykh",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.11174,
+  "lng": 30.93991,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 359280,
+  "name": "بنها",
+  "nameEn": "Banhā",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 30.45977,
+  "lng": 31.1842,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 352733,
+  "name": "مرسى مطروح",
+  "nameEn": "Marsá Maţrūḩ",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 31.3529,
+  "lng": 27.23725,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 360923,
+  "name": "الخارجة",
+  "nameEn": "Al Khārjah",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 25.45101,
+  "lng": 30.54653,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 359678,
+  "name": "الطور",
+  "nameEn": "El-Tor",
+  "country": "مصر",
+  "countryCode": "EG",
+  "lat": 28.24168,
+  "lng": 33.6222,
+  "timeZone": "Africa/Cairo"
+ },
+ {
+  "id": 3117735,
+  "name": "مدريد",
+  "nameEn": "Madrid",
+  "country": "أسبانيا",
+  "countryCode": "ES",
+  "lat": 40.4165,
+  "lng": -3.70256,
+  "timeZone": "Europe/Madrid"
+ },
+ {
+  "id": 344979,
+  "name": "أديس أبابا",
+  "nameEn": "Addis Ababa",
+  "country": "إثيوبيا",
+  "countryCode": "ET",
+  "lat": 9.02497,
+  "lng": 38.74689,
+  "timeZone": "Africa/Addis_Ababa"
+ },
+ {
+  "id": 2988507,
+  "name": "باريس",
+  "nameEn": "Paris",
+  "country": "فرنسا",
+  "countryCode": "FR",
+  "lat": 48.85341,
+  "lng": 2.3488,
+  "timeZone": "Europe/Paris"
+ },
+ {
+  "id": 2399697,
+  "name": "ليبرفيل",
+  "nameEn": "Libreville",
+  "country": "الجابون",
+  "countryCode": "GA",
+  "lat": 0.39241,
+  "lng": 9.45356,
+  "timeZone": "Africa/Libreville"
+ },
+ {
+  "id": 2643743,
+  "name": "لندن",
+  "nameEn": "London",
+  "country": "المملكة المتحدة",
+  "countryCode": "GB",
+  "lat": 51.50853,
+  "lng": -0.12574,
+  "timeZone": "Europe/London"
+ },
+ {
+  "id": 2306104,
+  "name": "أكرا",
+  "nameEn": "Accra",
+  "country": "غانا",
+  "countryCode": "GH",
+  "lat": 5.55602,
+  "lng": -0.1969,
+  "timeZone": "Africa/Accra"
+ },
+ {
+  "id": 2413876,
+  "name": "بانجول",
+  "nameEn": "Banjul",
+  "country": "غامبيا",
+  "countryCode": "GM",
+  "lat": 13.45274,
+  "lng": -16.57803,
+  "timeZone": "Africa/Banjul"
+ },
+ {
+  "id": 2422465,
+  "name": "كوناكري",
+  "nameEn": "Conakry",
+  "country": "غينيا",
+  "countryCode": "GN",
+  "lat": 9.53795,
+  "lng": -13.67729,
+  "timeZone": "Africa/Conakry"
+ },
+ {
+  "id": 2374775,
+  "name": "بيساو",
+  "nameEn": "Bissau",
+  "country": "غينيا بيساو",
+  "countryCode": "GW",
+  "lat": 11.86357,
+  "lng": -15.59767,
+  "timeZone": "Africa/Bissau"
+ },
+ {
+  "id": 3378644,
+  "name": "جورج تاون",
+  "nameEn": "Georgetown",
+  "country": "غيانا",
+  "countryCode": "GY",
+  "lat": 6.80448,
+  "lng": -58.15527,
+  "timeZone": "America/Guyana"
+ },
+ {
+  "id": 1642911,
+  "name": "جاكارتا",
+  "nameEn": "Jakarta",
+  "country": "إندونيسيا",
+  "countryCode": "ID",
+  "lat": -6.21462,
+  "lng": 106.84513,
+  "timeZone": "Asia/Jakarta"
+ },
+ {
+  "id": 1625822,
+  "name": "سورابايا",
+  "nameEn": "Surabaya",
+  "country": "إندونيسيا",
+  "countryCode": "ID",
+  "lat": -7.24917,
+  "lng": 112.75083,
+  "timeZone": "Asia/Jakarta"
+ },
+ {
+  "id": 1261481,
+  "name": "نيودلهي",
+  "nameEn": "New Delhi",
+  "country": "الهند",
+  "countryCode": "IN",
+  "lat": 28.62137,
+  "lng": 77.2148,
+  "timeZone": "Asia/Kolkata"
+ },
+ {
+  "id": 98182,
+  "name": "بغداد",
+  "nameEn": "Baghdad",
+  "country": "العراق",
+  "countryCode": "IQ",
+  "lat": 33.34058,
+  "lng": 44.40088,
+  "timeZone": "Asia/Baghdad"
+ },
+ {
+  "id": 99072,
+  "name": "الموصل",
+  "nameEn": "Mosul",
+  "country": "العراق",
+  "countryCode": "IQ",
+  "lat": 36.335,
+  "lng": 43.11889,
+  "timeZone": "Asia/Baghdad"
+ },
+ {
+  "id": 95446,
+  "name": "أربيل",
+  "nameEn": "Erbil",
+  "country": "العراق",
+  "countryCode": "IQ",
+  "lat": 36.19117,
+  "lng": 44.00943,
+  "timeZone": "Asia/Baghdad"
+ },
+ {
+  "id": 99532,
+  "name": "البصرة",
+  "nameEn": "Basrah",
+  "country": "العراق",
+  "countryCode": "IQ",
+  "lat": 30.50852,
+  "lng": 47.7804,
+  "timeZone": "Asia/Baghdad"
+ },
+ {
+  "id": 94824,
+  "name": "كربلاء",
+  "nameEn": "Karbala",
+  "country": "العراق",
+  "countryCode": "IQ",
+  "lat": 32.61603,
+  "lng": 44.02488,
+  "timeZone": "Asia/Baghdad"
+ },
+ {
+  "id": 94787,
+  "name": "كركوك",
+  "nameEn": "Kirkuk",
+  "country": "العراق",
+  "countryCode": "IQ",
+  "lat": 35.46806,
+  "lng": 44.39222,
+  "timeZone": "Asia/Baghdad"
+ },
+ {
+  "id": 112931,
+  "name": "طهران",
+  "nameEn": "Tehran",
+  "country": "إيران",
+  "countryCode": "IR",
+  "lat": 35.69439,
+  "lng": 51.42151,
+  "timeZone": "Asia/Tehran"
+ },
+ {
+  "id": 3169070,
+  "name": "روما",
+  "nameEn": "Rome",
+  "country": "إيطاليا",
+  "countryCode": "IT",
+  "lat": 41.89193,
+  "lng": 12.51133,
+  "timeZone": "Europe/Rome"
+ },
+ {
+  "id": 250441,
+  "name": "عمّان",
+  "nameEn": "Amman",
+  "country": "الأردن",
+  "countryCode": "JO",
+  "lat": 31.95522,
+  "lng": 35.94503,
+  "timeZone": "Asia/Amman"
+ },
+ {
+  "id": 1850147,
+  "name": "طوكيو",
+  "nameEn": "Tokyo",
+  "country": "اليابان",
+  "countryCode": "JP",
+  "lat": 35.6895,
+  "lng": 139.69171,
+  "timeZone": "Asia/Tokyo"
+ },
+ {
+  "id": 184745,
+  "name": "نيروبي",
+  "nameEn": "Nairobi",
+  "country": "كينيا",
+  "countryCode": "KE",
+  "lat": -1.28333,
+  "lng": 36.81667,
+  "timeZone": "Africa/Nairobi"
+ },
+ {
+  "id": 1528675,
+  "name": "بيشكك",
+  "nameEn": "Bishkek",
+  "country": "قيرغيزستان",
+  "countryCode": "KG",
+  "lat": 42.87,
+  "lng": 74.59,
+  "timeZone": "Asia/Bishkek"
+ },
+ {
+  "id": 921772,
+  "name": "موروني",
+  "nameEn": "Moroni",
+  "country": "اتحاد جزر القمر",
+  "countryCode": "KM",
+  "lat": -11.70216,
+  "lng": 43.25506,
+  "timeZone": "Indian/Comoro"
+ },
+ {
+  "id": 1871859,
+  "name": "بيونغيانغ",
+  "nameEn": "Pyongyang",
+  "country": "كوريا الشمالية",
+  "countryCode": "KP",
+  "lat": 39.03385,
+  "lng": 125.75432,
+  "timeZone": "Asia/Pyongyang"
+ },
+ {
+  "id": 1835848,
+  "name": "سيول",
+  "nameEn": "Seoul",
+  "country": "كوريا الجنوبية",
+  "countryCode": "KR",
+  "lat": 37.566,
+  "lng": 126.9784,
+  "timeZone": "Asia/Seoul"
+ },
+ {
+  "id": 285787,
+  "name": "اَلْكُوَيْت",
+  "nameEn": "Kuwait City",
+  "country": "الكويت",
+  "countryCode": "KW",
+  "lat": 29.367,
+  "lng": 47.97429,
+  "timeZone": "Asia/Kuwait"
+ },
+ {
+  "id": 1526273,
+  "name": "أستانا",
+  "nameEn": "Astana",
+  "country": "كازاخستان",
+  "countryCode": "KZ",
+  "lat": 51.1801,
+  "lng": 71.44598,
+  "timeZone": "Asia/Almaty"
+ },
+ {
+  "id": 276781,
+  "name": "بيروت",
+  "nameEn": "Beirut",
+  "country": "لبنان",
+  "countryCode": "LB",
+  "lat": 33.89332,
+  "lng": 35.50157,
+  "timeZone": "Asia/Beirut"
+ },
+ {
+  "id": 1248991,
+  "name": "كولمبو",
+  "nameEn": "Colombo",
+  "country": "سريلانكا",
+  "countryCode": "LK",
+  "lat": 6.93548,
+  "lng": 79.84868,
+  "timeZone": "Asia/Colombo"
+ },
+ {
+  "id": 2210247,
+  "name": "طرابلس",
+  "nameEn": "Tripoli",
+  "country": "ليبيا",
+  "countryCode": "LY",
+  "lat": 32.88743,
+  "lng": 13.18733,
+  "timeZone": "Africa/Tripoli"
+ },
+ {
+  "id": 2553604,
+  "name": "الدار البيضاء",
+  "nameEn": "Casablanca",
+  "country": "المغرب",
+  "countryCode": "MA",
+  "lat": 33.58831,
+  "lng": -7.61138,
+  "timeZone": "Africa/Casablanca"
+ },
+ {
+  "id": 2538475,
+  "name": "الرباط",
+  "nameEn": "Rabat",
+  "country": "المغرب",
+  "countryCode": "MA",
+  "lat": 34.01325,
+  "lng": -6.83255,
+  "timeZone": "Africa/Casablanca"
+ },
+ {
+  "id": 2548885,
+  "name": "فاس",
+  "nameEn": "Fes",
+  "country": "المغرب",
+  "countryCode": "MA",
+  "lat": 34.03313,
+  "lng": -5.00028,
+  "timeZone": "Africa/Casablanca"
+ },
+ {
+  "id": 2530335,
+  "name": "طنجة",
+  "nameEn": "Tangier",
+  "country": "المغرب",
+  "countryCode": "MA",
+  "lat": 35.76727,
+  "lng": -5.79975,
+  "timeZone": "Africa/Casablanca"
+ },
+ {
+  "id": 1070940,
+  "name": "أنتاناناريفو",
+  "nameEn": "Antananarivo",
+  "country": "مدغشقر",
+  "countryCode": "MG",
+  "lat": -18.91368,
+  "lng": 47.53613,
+  "timeZone": "Indian/Antananarivo"
+ },
+ {
+  "id": 2460596,
+  "name": "باماكو",
+  "nameEn": "Bamako",
+  "country": "مالي",
+  "countryCode": "ML",
+  "lat": 12.60915,
+  "lng": -7.97522,
+  "timeZone": "Africa/Bamako"
+ },
+ {
+  "id": 6611854,
+  "name": "نايبيداو",
+  "nameEn": "Nay Pyi Taw",
+  "country": "ميانمار",
+  "countryCode": "MM",
+  "lat": 19.745,
+  "lng": 96.12972,
+  "timeZone": "Asia/Yangon"
+ },
+ {
+  "id": 2377450,
+  "name": "نواكشوط",
+  "nameEn": "Nouakchott",
+  "country": "موريتانيا",
+  "countryCode": "MR",
+  "lat": 18.08581,
+  "lng": -15.9785,
+  "timeZone": "Africa/Nouakchott"
+ },
+ {
+  "id": 1282027,
+  "name": "ماليه",
+  "nameEn": "Male",
+  "country": "جزر المالديف",
+  "countryCode": "MV",
+  "lat": 4.17521,
+  "lng": 73.50916,
+  "timeZone": "Indian/Maldives"
+ },
+ {
+  "id": 3530597,
+  "name": "مدينة مكسيكو",
+  "nameEn": "Mexico City",
+  "country": "المكسيك",
+  "countryCode": "MX",
+  "lat": 19.42847,
+  "lng": -99.12766,
+  "timeZone": "America/Mexico_City"
+ },
+ {
+  "id": 1735161,
+  "name": "كوالالمبور",
+  "nameEn": "Kuala Lumpur",
+  "country": "ماليزيا",
+  "countryCode": "MY",
+  "lat": 3.1412,
+  "lng": 101.68653,
+  "timeZone": "Asia/Kuala_Lumpur"
+ },
+ {
+  "id": 1040652,
+  "name": "مابوتو",
+  "nameEn": "Maputo",
+  "country": "موزمبيق",
+  "countryCode": "MZ",
+  "lat": -25.96553,
+  "lng": 32.58322,
+  "timeZone": "Africa/Maputo"
+ },
+ {
+  "id": 2440485,
+  "name": "نيامي",
+  "nameEn": "Niamey",
+  "country": "النيجر",
+  "countryCode": "NE",
+  "lat": 13.51366,
+  "lng": 2.1098,
+  "timeZone": "Africa/Niamey"
+ },
+ {
+  "id": 2332459,
+  "name": "لاغوس",
+  "nameEn": "Lagos",
+  "country": "نيجيريا",
+  "countryCode": "NG",
+  "lat": 6.45407,
+  "lng": 3.39467,
+  "timeZone": "Africa/Lagos"
+ },
+ {
+  "id": 2335204,
+  "name": "كانو",
+  "nameEn": "Kano",
+  "country": "نيجيريا",
+  "countryCode": "NG",
+  "lat": 12.00012,
+  "lng": 8.51672,
+  "timeZone": "Africa/Lagos"
+ },
+ {
+  "id": 2339354,
+  "name": "إبادان",
+  "nameEn": "Ibadan",
+  "country": "نيجيريا",
+  "countryCode": "NG",
+  "lat": 7.37756,
+  "lng": 3.90591,
+  "timeZone": "Africa/Lagos"
+ },
+ {
+  "id": 2352778,
+  "name": "أبوجا",
+  "nameEn": "Abuja",
+  "country": "نيجيريا",
+  "countryCode": "NG",
+  "lat": 9.05785,
+  "lng": 7.49508,
+  "timeZone": "Africa/Lagos"
+ },
+ {
+  "id": 1283240,
+  "name": "كاتماندو",
+  "nameEn": "Kathmandu",
+  "country": "نيبال",
+  "countryCode": "NP",
+  "lat": 27.70169,
+  "lng": 85.3206,
+  "timeZone": "Asia/Kathmandu"
+ },
+ {
+  "id": 287286,
+  "name": "مسقط",
+  "nameEn": "Muscat",
+  "country": "عُمان",
+  "countryCode": "OM",
+  "lat": 23.58413,
+  "lng": 58.40778,
+  "timeZone": "Asia/Muscat"
+ },
+ {
+  "id": 3936456,
+  "name": "ليما",
+  "nameEn": "Lima",
+  "country": "بيرو",
+  "countryCode": "PE",
+  "lat": -12.04318,
+  "lng": -77.02824,
+  "timeZone": "America/Lima"
+ },
+ {
+  "id": 1701668,
+  "name": "مانيلا",
+  "nameEn": "Manila",
+  "country": "الفلبين",
+  "countryCode": "PH",
+  "lat": 14.6042,
+  "lng": 120.9822,
+  "timeZone": "Asia/Manila"
+ },
+ {
+  "id": 1172451,
+  "name": "لاهور",
+  "nameEn": "Lahore",
+  "country": "باكستان",
+  "countryCode": "PK",
+  "lat": 31.558,
+  "lng": 74.35071,
+  "timeZone": "Asia/Karachi"
+ },
+ {
+  "id": 1174872,
+  "name": "كراتشي",
+  "nameEn": "Karachi",
+  "country": "باكستان",
+  "countryCode": "PK",
+  "lat": 24.8608,
+  "lng": 67.0104,
+  "timeZone": "Asia/Karachi"
+ },
+ {
+  "id": 1168197,
+  "name": "بيشاور",
+  "nameEn": "Peshawar",
+  "country": "باكستان",
+  "countryCode": "PK",
+  "lat": 34.008,
+  "lng": 71.57849,
+  "timeZone": "Asia/Karachi"
+ },
+ {
+  "id": 1179400,
+  "name": "فيصل آباد",
+  "nameEn": "Faisalabad",
+  "country": "باكستان",
+  "countryCode": "PK",
+  "lat": 31.41554,
+  "lng": 73.08969,
+  "timeZone": "Asia/Karachi"
+ },
+ {
+  "id": 1166993,
+  "name": "راولبندي",
+  "nameEn": "Rawalpindi",
+  "country": "باكستان",
+  "countryCode": "PK",
+  "lat": 33.59733,
+  "lng": 73.0479,
+  "timeZone": "Asia/Karachi"
+ },
+ {
+  "id": 1176615,
+  "name": "إسلام آباد",
+  "nameEn": "Islamabad",
+  "country": "باكستان",
+  "countryCode": "PK",
+  "lat": 33.72148,
+  "lng": 73.04329,
+  "timeZone": "Asia/Karachi"
+ },
+ {
+  "id": 756135,
+  "name": "وارسو",
+  "nameEn": "Warsaw",
+  "country": "بولندا",
+  "countryCode": "PL",
+  "lat": 52.22977,
+  "lng": 21.01178,
+  "timeZone": "Europe/Warsaw"
+ },
+ {
+  "id": 7303419,
+  "name": "القدس الشرقية",
+  "nameEn": "East Jerusalem",
+  "country": "فلسطين",
+  "countryCode": "PS",
+  "lat": 31.78336,
+  "lng": 35.23388,
+  "timeZone": "Asia/Hebron"
+ },
+ {
+  "id": 281133,
+  "name": "غزة",
+  "nameEn": "Gaza",
+  "country": "فلسطين",
+  "countryCode": "PS",
+  "lat": 31.50161,
+  "lng": 34.46672,
+  "timeZone": "Asia/Gaza"
+ },
+ {
+  "id": 281124,
+  "name": "خان يونس",
+  "nameEn": "Khān Yūnis",
+  "country": "فلسطين",
+  "countryCode": "PS",
+  "lat": 31.34018,
+  "lng": 34.30627,
+  "timeZone": "Asia/Gaza"
+ },
+ {
+  "id": 281129,
+  "name": "جباليا",
+  "nameEn": "Jabālyā",
+  "country": "فلسطين",
+  "countryCode": "PS",
+  "lat": 31.5272,
+  "lng": 34.48347,
+  "timeZone": "Asia/Gaza"
+ },
+ {
+  "id": 285066,
+  "name": "الخليل",
+  "nameEn": "Hebron",
+  "country": "فلسطين",
+  "countryCode": "PS",
+  "lat": 31.52935,
+  "lng": 35.0938,
+  "timeZone": "Asia/Hebron"
+ },
+ {
+  "id": 282615,
+  "name": "نابلس",
+  "nameEn": "Nablus",
+  "country": "فلسطين",
+  "countryCode": "PS",
+  "lat": 32.22111,
+  "lng": 35.25444,
+  "timeZone": "Asia/Hebron"
+ },
+ {
+  "id": 281102,
+  "name": "رفح",
+  "nameEn": "Rafaḩ",
+  "country": "فلسطين",
+  "countryCode": "PS",
+  "lat": 31.29722,
+  "lng": 34.24357,
+  "timeZone": "Asia/Gaza"
+ },
+ {
+  "id": 290030,
+  "name": "الدوحة",
+  "nameEn": "Doha",
+  "country": "قطر",
+  "countryCode": "QA",
+  "lat": 25.28545,
+  "lng": 51.53096,
+  "timeZone": "Asia/Qatar"
+ },
+ {
+  "id": 524901,
+  "name": "موسكو",
+  "nameEn": "Moscow",
+  "country": "روسيا",
+  "countryCode": "RU",
+  "lat": 55.75204,
+  "lng": 37.61781,
+  "timeZone": "Europe/Moscow"
+ },
+ {
+  "id": 105343,
+  "name": "جدة",
+  "nameEn": "Jeddah",
+  "country": "المملكة العربية السعودية",
+  "countryCode": "SA",
+  "lat": 21.49012,
+  "lng": 39.18624,
+  "timeZone": "Asia/Riyadh"
+ },
+ {
+  "id": 108410,
+  "name": "الرياض",
+  "nameEn": "Riyadh",
+  "country": "المملكة العربية السعودية",
+  "countryCode": "SA",
+  "lat": 24.68773,
+  "lng": 46.72185,
+  "timeZone": "Asia/Riyadh"
+ },
+ {
+  "id": 104515,
+  "name": "مكة المكرمة",
+  "nameEn": "Makkah",
+  "country": "المملكة العربية السعودية",
+  "countryCode": "SA",
+  "lat": 21.42664,
+  "lng": 39.82563,
+  "timeZone": "Asia/Riyadh"
+ },
+ {
+  "id": 109223,
+  "name": "المدينة المنورة",
+  "nameEn": "Madinah",
+  "country": "المملكة العربية السعودية",
+  "countryCode": "SA",
+  "lat": 24.46861,
+  "lng": 39.61417,
+  "timeZone": "Asia/Riyadh"
+ },
+ {
+  "id": 110336,
+  "name": "الدمام",
+  "nameEn": "Dammam",
+  "country": "المملكة العربية السعودية",
+  "countryCode": "SA",
+  "lat": 26.43442,
+  "lng": 50.10326,
+  "timeZone": "Asia/Riyadh"
+ },
+ {
+  "id": 379252,
+  "name": "الخرطوم",
+  "nameEn": "Khartoum",
+  "country": "السودان",
+  "countryCode": "SD",
+  "lat": 15.55177,
+  "lng": 32.53241,
+  "timeZone": "Africa/Khartoum"
+ },
+ {
+  "id": 365137,
+  "name": "أم درمان",
+  "nameEn": "Omdurman",
+  "country": "السودان",
+  "countryCode": "SD",
+  "lat": 15.64453,
+  "lng": 32.47773,
+  "timeZone": "Africa/Khartoum"
+ },
+ {
+  "id": 379251,
+  "name": "الخرطوم بحري",
+  "nameEn": "Khartoum North",
+  "country": "السودان",
+  "countryCode": "SD",
+  "lat": 15.64925,
+  "lng": 32.53458,
+  "timeZone": "Africa/Khartoum"
+ },
+ {
+  "id": 2409306,
+  "name": "فريتاون",
+  "nameEn": "Freetown",
+  "country": "سيراليون",
+  "countryCode": "SL",
+  "lat": 8.48714,
+  "lng": -13.2356,
+  "timeZone": "Africa/Freetown"
+ },
+ {
+  "id": 2253354,
+  "name": "داكار",
+  "nameEn": "Dakar",
+  "country": "السنغال",
+  "countryCode": "SN",
+  "lat": 14.6937,
+  "lng": -17.44406,
+  "timeZone": "Africa/Dakar"
+ },
+ {
+  "id": 53654,
+  "name": "مقديشو",
+  "nameEn": "Mogadishu",
+  "country": "الصومال",
+  "countryCode": "SO",
+  "lat": 2.03711,
+  "lng": 45.34375,
+  "timeZone": "Africa/Mogadishu"
+ },
+ {
+  "id": 3383330,
+  "name": "باراماريبو",
+  "nameEn": "Paramaribo",
+  "country": "سورينام",
+  "countryCode": "SR",
+  "lat": 5.86638,
+  "lng": -55.16682,
+  "timeZone": "America/Paramaribo"
+ },
+ {
+  "id": 170063,
+  "name": "حلب",
+  "nameEn": "Aleppo",
+  "country": "سوريا",
+  "countryCode": "SY",
+  "lat": 36.20124,
+  "lng": 37.16117,
+  "timeZone": "Asia/Damascus"
+ },
+ {
+  "id": 170654,
+  "name": "دمشق",
+  "nameEn": "Damascus",
+  "country": "سوريا",
+  "countryCode": "SY",
+  "lat": 33.5102,
+  "lng": 36.29128,
+  "timeZone": "Asia/Damascus"
+ },
+ {
+  "id": 2427123,
+  "name": "انجمينا",
+  "nameEn": "N'Djamena",
+  "country": "تشاد",
+  "countryCode": "TD",
+  "lat": 12.10672,
+  "lng": 15.0444,
+  "timeZone": "Africa/Ndjamena"
+ },
+ {
+  "id": 2365267,
+  "name": "لومي",
+  "nameEn": "Lomé",
+  "country": "توجو",
+  "countryCode": "TG",
+  "lat": 6.12874,
+  "lng": 1.22154,
+  "timeZone": "Africa/Lome"
+ },
+ {
+  "id": 1609350,
+  "name": "بانكوك",
+  "nameEn": "Bangkok",
+  "country": "تايلاند",
+  "countryCode": "TH",
+  "lat": 13.75398,
+  "lng": 100.50144,
+  "timeZone": "Asia/Bangkok"
+ },
+ {
+  "id": 1221874,
+  "name": "دوشنبه",
+  "nameEn": "Dushanbe",
+  "country": "طاجكستان",
+  "countryCode": "TJ",
+  "lat": 38.53575,
+  "lng": 68.77905,
+  "timeZone": "Asia/Dushanbe"
+ },
+ {
+  "id": 162183,
+  "name": "عشق آباد",
+  "nameEn": "Ashgabat",
+  "country": "تركمانستان",
+  "countryCode": "TM",
+  "lat": 37.95,
+  "lng": 58.38333,
+  "timeZone": "Asia/Ashgabat"
+ },
+ {
+  "id": 2464470,
+  "name": "تونس",
+  "nameEn": "Tunis",
+  "country": "تونس",
+  "countryCode": "TN",
+  "lat": 36.81897,
+  "lng": 10.16579,
+  "timeZone": "Africa/Tunis"
+ },
+ {
+  "id": 745044,
+  "name": "اسطنبول",
+  "nameEn": "Istanbul",
+  "country": "تركيا",
+  "countryCode": "TR",
+  "lat": 41.01384,
+  "lng": 28.94966,
+  "timeZone": "Europe/Istanbul"
+ },
+ {
+  "id": 323786,
+  "name": "أنقرة",
+  "nameEn": "Ankara",
+  "country": "تركيا",
+  "countryCode": "TR",
+  "lat": 39.91987,
+  "lng": 32.85427,
+  "timeZone": "Europe/Istanbul"
+ },
+ {
+  "id": 750269,
+  "name": "بورصة",
+  "nameEn": "Bursa",
+  "country": "تركيا",
+  "countryCode": "TR",
+  "lat": 40.19559,
+  "lng": 29.06013,
+  "timeZone": "Europe/Istanbul"
+ },
+ {
+  "id": 1668341,
+  "name": "تايبيه",
+  "nameEn": "Taipei",
+  "country": "تايوان",
+  "countryCode": "TW",
+  "lat": 25.05306,
+  "lng": 121.52639,
+  "timeZone": "Asia/Taipei"
+ },
+ {
+  "id": 160196,
+  "name": "دودوما",
+  "nameEn": "Dodoma",
+  "country": "تنزانيا",
+  "countryCode": "TZ",
+  "lat": -6.17221,
+  "lng": 35.73947,
+  "timeZone": "Africa/Dar_es_Salaam"
+ },
+ {
+  "id": 703448,
+  "name": "كييف",
+  "nameEn": "Kyiv",
+  "country": "أوكرانيا",
+  "countryCode": "UA",
+  "lat": 50.45466,
+  "lng": 30.5238,
+  "timeZone": "Europe/Kyiv"
+ },
+ {
+  "id": 232422,
+  "name": "كمبالا",
+  "nameEn": "Kampala",
+  "country": "أوغندا",
+  "countryCode": "UG",
+  "lat": 0.31628,
+  "lng": 32.58219,
+  "timeZone": "Africa/Kampala"
+ },
+ {
+  "id": 5128581,
+  "name": "نيويورك",
+  "nameEn": "New York City",
+  "country": "الولايات المتحدة الأمريكية",
+  "countryCode": "US",
+  "lat": 40.71427,
+  "lng": -74.00597,
+  "timeZone": "America/New_York"
+ },
+ {
+  "id": 4140963,
+  "name": "واشنطن",
+  "nameEn": "Washington",
+  "country": "الولايات المتحدة الأمريكية",
+  "countryCode": "US",
+  "lat": 38.89511,
+  "lng": -77.03637,
+  "timeZone": "America/New_York"
+ },
+ {
+  "id": 1512569,
+  "name": "طشقند",
+  "nameEn": "Tashkent",
+  "country": "أوزبكستان",
+  "countryCode": "UZ",
+  "lat": 41.26465,
+  "lng": 69.21627,
+  "timeZone": "Asia/Tashkent"
+ },
+ {
+  "id": 3646738,
+  "name": "كاراكاس",
+  "nameEn": "Caracas",
+  "country": "فنزويلا",
+  "countryCode": "VE",
+  "lat": 10.48801,
+  "lng": -66.87919,
+  "timeZone": "America/Caracas"
+ },
+ {
+  "id": 1566083,
+  "name": "مدينة هو تشي مينه",
+  "nameEn": "Ho Chi Minh City",
+  "country": "فيتنام",
+  "countryCode": "VN",
+  "lat": 10.82302,
+  "lng": 106.62965,
+  "timeZone": "Asia/Ho_Chi_Minh"
+ },
+ {
+  "id": 1581130,
+  "name": "هانوي",
+  "nameEn": "Hanoi",
+  "country": "فيتنام",
+  "countryCode": "VN",
+  "lat": 21.0245,
+  "lng": 105.84117,
+  "timeZone": "Asia/Bangkok"
+ },
+ {
+  "id": 71137,
+  "name": "صنعاء",
+  "nameEn": "Sanaa",
+  "country": "اليمن",
+  "countryCode": "YE",
+  "lat": 15.35452,
+  "lng": 44.20646,
+  "timeZone": "Asia/Aden"
+ },
+ {
+  "id": 415189,
+  "name": "عدن",
+  "nameEn": "Aden",
+  "country": "اليمن",
+  "countryCode": "YE",
+  "lat": 12.77957,
+  "lng": 45.03852,
+  "timeZone": "Asia/Aden"
+ },
+ {
+  "id": 993800,
+  "name": "جوهانسبرغ",
+  "nameEn": "Johannesburg",
+  "country": "جمهورية جنوب افريقيا",
+  "countryCode": "ZA",
+  "lat": -26.20227,
+  "lng": 28.04363,
+  "timeZone": "Africa/Johannesburg"
+ },
+ {
+  "id": 964137,
+  "name": "بريتوريا",
+  "nameEn": "Pretoria",
+  "country": "جمهورية جنوب افريقيا",
+  "countryCode": "ZA",
+  "lat": -25.74486,
+  "lng": 28.18783,
+  "timeZone": "Africa/Johannesburg"
+ }
+]

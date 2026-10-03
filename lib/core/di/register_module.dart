@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:manara/core/network/dio_factory.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,4 +12,8 @@ abstract class RegisterModule {
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
+
+  /// Bundled data files (e.g. the city list).
+  @lazySingleton
+  AssetBundle get assetBundle => rootBundle;
 }

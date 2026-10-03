@@ -11,7 +11,7 @@ import 'package:manara/core/widgets/more_menu.dart';
 enum NavItem {
   home('الرئيسية', AppRoutes.home),
   quran('القرآن الكريم', AppRoutes.quran),
-  prayer('الصلاة'),
+  prayer('الصلاة', AppRoutes.prayer),
   adhkar('الأذكار'),
   hadith('الأحاديث'),
   rooms('الغرف'),
