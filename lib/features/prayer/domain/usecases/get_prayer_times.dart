@@ -44,6 +44,71 @@ class GetPrayerMonth implements UseCase<PrayerMonth, PrayerMonthParams> {
   }
 }
 
+class UpcomingDaysParams extends Equatable {
+  const UpcomingDaysParams({
+    required this.now,
+    required this.location,
+    required this.settings,
+    required this.count,
+  });
+
+  final DateTime now;
+  final PrayerLocation location;
+  final PrayerSettings settings;
+
+  /// How many days, from today at the location.
+  final int count;
+
+  @override
+  List<Object?> get props => [now, location, settings, count];
+}
+
+/// Today at the location and the days after it, up to
+/// [UpcomingDaysParams.count]. The next month is fetched when this month's
+/// padding runs out; without it, fewer days come back.
+@injectable
+class GetUpcomingPrayerDays
+    implements UseCase<List<PrayerDay>, UpcomingDaysParams> {
+  const GetUpcomingPrayerDays(this._getMonth);
+
+  final GetPrayerMonth _getMonth;
+
+  @override
+  ResultFuture<List<PrayerDay>> call(UpcomingDaysParams params) async {
+    final utc = params.now.toUtc();
+    Future<Either<Failure, PrayerMonth>> month(int year, int month) =>
+        _getMonth(
+          PrayerMonthParams(
+            location: params.location,
+            settings: params.settings,
+            year: year,
+            month: month,
+          ),
+        );
+
+    final first = await month(utc.year, utc.month);
+    return first.fold(Left.new, (current) async {
+      final today = current.dayAt(params.now);
+      if (today == null) {
+        return const Left(ServerFailure('تعذّر تحديد مواقيت اليوم'));
+      }
+      final days = current.allDays
+          .skip(current.allDays.indexOf(today))
+          .take(params.count)
+          .toList();
+      if (days.length < params.count) {
+        final next = DateTime.utc(utc.year, utc.month + 1);
+        final more = await month(next.year, next.month);
+        for (final day in more.getOrElse((_) => current).allDays) {
+          if (days.length == params.count) break;
+          if (day.start.isAfter(days.last.start)) days.add(day);
+        }
+      }
+      return Right(days);
+    });
+  }
+}
+
 class PrayerTimesParams extends Equatable {
   const PrayerTimesParams({
     required this.now,

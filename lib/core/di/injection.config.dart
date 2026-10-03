@@ -15,6 +15,7 @@ import 'package:flutter/services.dart' as _i281;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:manara/core/di/register_module.dart' as _i530;
+import 'package:manara/core/platform/local_notifications.dart' as _i53;
 import 'package:manara/features/hadith/data/datasources/daily_hadith_local_data_source.dart'
     as _i970;
 import 'package:manara/features/hadith/data/repositories/hadith_repository_impl.dart'
@@ -49,6 +50,8 @@ import 'package:manara/features/prayer/domain/usecases/get_prayer_times.dart'
     as _i462;
 import 'package:manara/features/prayer/domain/usecases/prayer_preferences_usecases.dart'
     as _i448;
+import 'package:manara/features/prayer/presentation/cubit/alert_notifier.dart'
+    as _i309;
 import 'package:manara/features/prayer/presentation/cubit/city_search_cubit.dart'
     as _i370;
 import 'package:manara/features/prayer/presentation/cubit/nearby_cities_cubit.dart'
@@ -104,12 +107,14 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
+    final alertNotifierModule = _$AlertNotifierModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => registerModule.prefs,
       preResolve: true,
     );
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i281.AssetBundle>(() => registerModule.assetBundle);
+    gh.lazySingleton<_i53.LocalNotifications>(() => _i53.LocalNotifications());
     gh.lazySingleton<_i359.QuranRemoteDataSource>(
       () => _i359.QuranRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
@@ -124,9 +129,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i146.HadithRepository>(
       () => _i949.HadithRepositoryImpl(gh<_i970.DailyHadithLocalDataSource>()),
-    );
-    gh.lazySingleton<_i177.AlertNotifier>(
-      () => const _i177.BrowserAlertNotifier(),
     );
     gh.factory<_i1.GetHadithOfTheDay>(
       () => _i1.GetHadithOfTheDay(gh<_i146.HadithRepository>()),
@@ -153,6 +155,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i945.PrayerTimesRemoteDataSource>(),
         gh<_i524.PrayerLocalDataSource>(),
       ),
+    );
+    gh.lazySingleton<_i309.AlertNotifier>(
+      () => alertNotifierModule.alertNotifier(gh<_i53.LocalNotifications>()),
     );
     gh.factory<_i568.GetPageTafsir>(
       () => _i568.GetPageTafsir(gh<_i483.TafsirRepository>()),
@@ -208,6 +213,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i253.NearbyCitiesCubit>(
       () => _i253.NearbyCitiesCubit(gh<_i990.GetNearbyCities>()),
+    );
+    gh.factory<_i462.GetUpcomingPrayerDays>(
+      () => _i462.GetUpcomingPrayerDays(gh<_i462.GetPrayerMonth>()),
     );
     gh.factory<_i462.GetPrayerTimes>(
       () => _i462.GetPrayerTimes(gh<_i462.GetPrayerMonth>()),
@@ -271,6 +279,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i448.SaveAlertSettings>(
       () => _i448.SaveAlertSettings(gh<_i497.PrayerPreferencesRepository>()),
     );
+    gh.factory<_i177.PrayerAlertsCubit>(
+      () => _i177.PrayerAlertsCubit(
+        gh<_i448.GetAlertSettings>(),
+        gh<_i448.SaveAlertSettings>(),
+        gh<_i177.AlertNotifier>(),
+        gh<_i462.GetUpcomingPrayerDays>(),
+      ),
+    );
     gh.factory<_i258.PrayerTimesCubit>(
       () => _i258.PrayerTimesCubit(
         gh<_i462.GetPrayerTimes>(),
@@ -280,15 +296,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i448.SavePrayerSettings>(),
       ),
     );
-    gh.factory<_i177.PrayerAlertsCubit>(
-      () => _i177.PrayerAlertsCubit(
-        gh<_i448.GetAlertSettings>(),
-        gh<_i448.SaveAlertSettings>(),
-        gh<_i177.AlertNotifier>(),
-      ),
-    );
     return this;
   }
 }
 
 class _$RegisterModule extends _i530.RegisterModule {}
+
+class _$AlertNotifierModule extends _i309.AlertNotifierModule {}

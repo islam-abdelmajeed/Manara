@@ -8,9 +8,11 @@ import 'package:manara/features/prayer/presentation/cubit/prayer_alerts_cubit.da
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
 import 'package:manara/features/prayer/presentation/utils/alert_text.dart';
 
-/// Fires the user's prayer alerts while the app is open: a system
-/// notification when the browser allows it, otherwise a message in the
-/// app. Expects [PrayerTimesCubit] and [PrayerAlertsCubit] above it.
+/// Fires the user's prayer alerts. Where the system schedules them
+/// ([AlertNotifier.schedulesAhead], Android and iOS) it keeps that schedule
+/// current and shows nothing itself. Otherwise, while the app is open: a
+/// browser notification when allowed, else a message in the app. Expects
+/// [PrayerTimesCubit] and [PrayerAlertsCubit] above it.
 class PrayerAlertScheduler extends StatefulWidget {
   const PrayerAlertScheduler({
     required this.child,
@@ -32,7 +34,8 @@ class PrayerAlertScheduler extends StatefulWidget {
   State<PrayerAlertScheduler> createState() => _PrayerAlertSchedulerState();
 }
 
-class _PrayerAlertSchedulerState extends State<PrayerAlertScheduler> {
+class _PrayerAlertSchedulerState extends State<PrayerAlertScheduler>
+    with WidgetsBindingObserver {
   Timer? _timer;
 
   /// Alerts already shown, so a rebuild at the same moment can't repeat one.
@@ -41,15 +44,34 @@ class _PrayerAlertSchedulerState extends State<PrayerAlertScheduler> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _schedule());
+    WidgetsBinding.instance
+      ..addObserver(this)
+      ..addPostFrameCallback((_) => _schedule());
+  }
+
+  /// Back from the system settings, the permissions may have changed.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      unawaited(context.read<PrayerAlertsCubit>().refreshPermission());
+    }
   }
 
   void _schedule() {
     _timer?.cancel();
     if (!mounted) return;
-    final times = context.read<PrayerTimesCubit>().state.times;
-    final alerts = context.read<PrayerAlertsCubit>().state.settings;
-    if (times == null || !alerts.anyEnabled) return;
+    final prayer = context.read<PrayerTimesCubit>().state;
+    final times = prayer.times;
+    final alertsCubit = context.read<PrayerAlertsCubit>();
+    final alerts = alertsCubit.state.settings;
+    if (times == null) return;
+
+    if (widget.notifier.schedulesAhead) {
+      unawaited(alertsCubit.syncSystem(prayer.location, prayer.settings));
+      // The system shows them, also while the app is open.
+      if (alertsCubit.state.canNotify) return;
+    }
+    if (!alerts.anyEnabled) return;
 
     var after = widget.clock();
     final last = _lastShown;
@@ -81,6 +103,7 @@ class _PrayerAlertSchedulerState extends State<PrayerAlertScheduler> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     super.dispose();
   }
@@ -94,7 +117,11 @@ class _PrayerAlertSchedulerState extends State<PrayerAlertScheduler> {
           listener: (_, _) => _schedule(),
         ),
         BlocListener<PrayerAlertsCubit, PrayerAlertsState>(
-          listenWhen: (a, b) => a.settings != b.settings,
+          listenWhen: (a, b) =>
+              a.settings != b.settings ||
+              a.permission != b.permission ||
+              a.exact != b.exact ||
+              a.loaded != b.loaded,
           listener: (_, _) => _schedule(),
         ),
       ],

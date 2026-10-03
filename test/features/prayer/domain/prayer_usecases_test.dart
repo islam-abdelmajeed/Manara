@@ -159,4 +159,79 @@ void main() {
       },
     );
   });
+
+  group('GetUpcomingPrayerDays', () {
+    late GetUpcomingPrayerDays upcoming;
+
+    void stubNovember(Either<Failure, PrayerMonth> result) => when(
+      () => repository.getMonth(
+        location: any(named: 'location'),
+        settings: any(named: 'settings'),
+        year: 2026,
+        month: 11,
+      ),
+    ).thenAnswer((_) async => result);
+
+    setUp(() {
+      upcoming = GetUpcomingPrayerDays(GetPrayerMonth(repository));
+      stubNovember(Right(cairoNovember()));
+    });
+
+    Future<Either<Failure, List<PrayerDay>>> daysAt(DateTime now) => upcoming(
+      UpcomingDaysParams(
+        now: now,
+        location: PrayerLocation.cairo,
+        settings: const PrayerSettings(),
+        count: 10,
+      ),
+    );
+
+    List<DateTime> dates(Either<Failure, List<PrayerDay>> result) => result
+        .getOrElse((f) => throw StateError(f.message))
+        .map((d) => d.date)
+        .toList();
+
+    List<DateTime> from(int month, int day, int count) => [
+      for (var i = 0; i < count; i++) DateTime.utc(2026, month, day + i),
+    ];
+
+    test('mid-month: today and the next nine days, one request', () async {
+      expect(dates(await daysAt(cairo(10, 2, 13))), from(10, 2, 10));
+      verifyNever(
+        () => repository.getMonth(
+          location: any(named: 'location'),
+          settings: any(named: 'settings'),
+          year: 2026,
+          month: 11,
+        ),
+      );
+    });
+
+    test('runs on into the next month without repeating a day', () async {
+      // October's padding ends on 4 Nov; 5–8 Nov come from November.
+      final result = await daysAt(cairo(10, 30, 13));
+      expect(dates(result), from(10, 30, 10));
+      final days = result.getOrElse((_) => []);
+      // The shared days are October's own (Aladhan's Asr on 31 Oct differs
+      // by a minute between the two requests).
+      expect(days[1], cairoOctober().allDays.firstWhere((d) => d == days[1]));
+    });
+
+    test('without the next month, the days there are', () async {
+      stubNovember(const Left(NetworkFailure()));
+      expect(dates(await daysAt(cairo(10, 30, 13))), from(10, 30, 6));
+    });
+
+    test("this month's failure is the result", () async {
+      when(
+        () => repository.getMonth(
+          location: any(named: 'location'),
+          settings: any(named: 'settings'),
+          year: 2026,
+          month: 10,
+        ),
+      ).thenAnswer((_) async => const Left(NetworkFailure()));
+      expect((await daysAt(cairo(10, 2, 13))).isLeft(), isTrue);
+    });
+  });
 }

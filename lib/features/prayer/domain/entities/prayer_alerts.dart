@@ -94,6 +94,23 @@ class AlertEvent extends Equatable {
     AlertSettings settings,
     DateTime after,
   ) {
+    final events = upcoming(
+      [times.today, times.tomorrow],
+      settings,
+      after,
+      limit: 1,
+    );
+    return events.isEmpty ? null : events.first;
+  }
+
+  /// The alerts strictly after [after] on [days], soonest first; at most
+  /// [limit] of them when given.
+  static List<AlertEvent> upcoming(
+    Iterable<PrayerDay> days,
+    AlertSettings settings,
+    DateTime after, {
+    int? limit,
+  }) {
     final events = <AlertEvent>[];
     void add(PrayerDay day, AlertKind kind, Prayer prayer, int minutes) =>
         events.add(
@@ -105,7 +122,7 @@ class AlertEvent extends Equatable {
           ),
         );
 
-    for (final day in [times.today, times.tomorrow]) {
+    for (final day in days) {
       for (final prayer in Prayer.values.where((p) => p.isPrayer)) {
         final alert = settings.alertOf(prayer);
         if (alert.enabled) {
@@ -119,10 +136,12 @@ class AlertEvent extends Equatable {
         add(day, AlertKind.friday, Prayer.dhuhr, AlertSettings.fridayMinutes);
       }
     }
-    events.removeWhere((e) => !e.at.isAfter(after));
-    if (events.isEmpty) return null;
-    events.sort((a, b) => a.at.compareTo(b.at));
-    return events.first;
+    events
+      ..removeWhere((e) => !e.at.isAfter(after))
+      ..sort((a, b) => a.at.compareTo(b.at));
+    return limit == null || events.length <= limit
+        ? events
+        : events.sublist(0, limit);
   }
 
   @override

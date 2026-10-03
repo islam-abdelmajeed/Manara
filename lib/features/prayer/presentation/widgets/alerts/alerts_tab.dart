@@ -10,20 +10,26 @@ import 'package:manara/features/prayer/presentation/utils/prayer_format.dart';
 import 'package:manara/features/prayer/presentation/widgets/prayer_form.dart';
 import 'package:manara/features/prayer/presentation/widgets/prayer_layout.dart';
 
-/// "التنبيهات" (Figma "الصلاة -التنبيهات"). Alerts fire while the app (or
-/// the browser tab) is open; tones and adhan voices are not available yet.
+/// "التنبيهات" (Figma "الصلاة -التنبيهات"). On Android and iOS alerts are
+/// scheduled with the system; elsewhere they fire while the app (or the
+/// browser tab) is open. Tones and adhan voices are not available yet.
 class AlertsTab extends StatelessWidget {
   const AlertsTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     final compact = PrayerLayout.isCompact(context);
+    final schedulesAhead = context.select<PrayerAlertsCubit, bool>(
+      (c) => c.state.schedulesAhead,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PrayerSectionTitle(
           'تنبيهات الصلاة',
-          description: BrowserActions.supported
+          description: schedulesAhead
+              ? 'تنبيهات المواقيت على جهازك، وتصلك حتى والتطبيق مغلق.'
+              : BrowserActions.supported
               ? 'تنبيهات المواقيت داخل متصفحك، وتعمل ما دام هذا التبويب مفتوحًا.'
               : 'تنبيهات المواقيت داخل التطبيق، وتعمل ما دام التطبيق مفتوحًا.',
         ),
@@ -37,22 +43,42 @@ class AlertsTab extends StatelessWidget {
   }
 }
 
-/// What happens to alerts given the browser's notification permission.
+/// What happens to alerts given the notification permission (and, on
+/// Android, whether exact alarms are allowed).
 class _PermissionNote extends StatelessWidget {
   const _PermissionNote();
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<PrayerAlertsCubit>();
     final state = context.watch<PrayerAlertsCubit>().state;
-    if (!state.settings.anyEnabled || state.canNotify) {
+    final late = state.schedulesAhead && state.canNotify && !state.exact;
+    if (!state.settings.anyEnabled || (state.canNotify && !late)) {
       return const SizedBox.shrink();
     }
-    final text = switch (state.permission) {
-      'default' => 'اسمح للمتصفح بالإشعارات لتصلك التنبيهات خارج الصفحة.',
-      'denied' =>
-        'الإشعارات محجوبة في إعدادات المتصفح؛ ستظهر التنبيهات داخل الصفحة.',
-      _ => 'ستظهر التنبيهات داخل التطبيق ما دام مفتوحًا.',
-    };
+    final String text;
+    VoidCallback? allow;
+    if (late) {
+      text =
+          'اسمح للتطبيق بـ«المنبّهات والتذكيرات» من إعدادات الجهاز لتصل '
+          'التنبيهات في وقتها بالضبط؛ وإلا فقد تتأخر بضع دقائق.';
+      allow = cubit.requestExact;
+    } else if (state.schedulesAhead) {
+      text = switch (state.permission) {
+        'default' => 'اسمح للتطبيق بالإشعارات لتصلك التنبيهات والتطبيق مغلق.',
+        _ =>
+          'الإشعارات مقفلة من إعدادات الجهاز؛ ستظهر التنبيهات داخل التطبيق '
+              'ما دام مفتوحًا.',
+      };
+    } else {
+      text = switch (state.permission) {
+        'default' => 'اسمح للمتصفح بالإشعارات لتصلك التنبيهات خارج الصفحة.',
+        'denied' =>
+          'الإشعارات محجوبة في إعدادات المتصفح؛ ستظهر التنبيهات داخل الصفحة.',
+        _ => 'ستظهر التنبيهات داخل التطبيق ما دام مفتوحًا.',
+      };
+    }
+    if (!late && state.canAsk) allow = cubit.requestPermission;
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.md),
       child: DecoratedBox(
@@ -79,13 +105,9 @@ class _PermissionNote extends StatelessWidget {
                   ),
                 ),
               ),
-              if (state.canAsk) ...[
+              if (allow != null) ...[
                 const SizedBox(width: AppSpacing.sm),
-                TextButton(
-                  onPressed: () =>
-                      context.read<PrayerAlertsCubit>().requestPermission(),
-                  child: const Text('السماح'),
-                ),
+                TextButton(onPressed: allow, child: const Text('السماح')),
               ],
             ],
           ),

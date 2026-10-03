@@ -22,6 +22,19 @@ PrayerMonth cairoOctober({DateTime? fetchedAt}) => PrayerMonthModel.fromAladhan(
   fetchedAt: fetchedAt,
 );
 
+/// Cairo, 27 Oct – 4 Dec 2026. Fetched separately from [cairoOctober]: on
+/// two of the shared days Aladhan's Asr differs by a minute (its rounding
+/// depends on the requested range).
+PrayerMonth cairoNovember({DateTime? fetchedAt}) =>
+    PrayerMonthModel.fromAladhan(
+      aladhanFixture('cairo_2026_11.json')['data'] as List<dynamic>,
+      year: 2026,
+      month: 11,
+      from: DateTime.utc(2026, 10, 27),
+      to: DateTime.utc(2026, 12, 4),
+      fetchedAt: fetchedAt,
+    );
+
 /// Cairo, 27 Nov 2026 – 4 Jan 2027 (UTC+2 throughout).
 PrayerMonth cairoDecember({DateTime? fetchedAt}) =>
     PrayerMonthModel.fromAladhan(
