@@ -15,13 +15,12 @@ import 'package:manara/features/home/presentation/widgets/daily_adhkar_card.dart
 import 'package:manara/features/home/presentation/widgets/hadith_of_day_card.dart';
 import 'package:manara/features/home/presentation/widgets/prayer_times_card.dart';
 import 'package:manara/features/home/presentation/widgets/reading_journey_card.dart';
-import 'package:manara/features/prayer/data/models/prayer_times_model.dart';
-import 'package:manara/features/prayer/domain/entities/prayer_location.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
 import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/fonts.dart';
+import '../../helpers/prayer_fixtures.dart';
 
 class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
 
@@ -36,30 +35,9 @@ const _hadith = Hadith(
   source: 'رواه مسلم',
 );
 
-/// 16:00 on the day of the fixture: Asr (16:10) is next.
-DateTime _clock() => DateTime(2026, 9, 29, 16);
-
-PrayerTimesModel _times() => PrayerTimesModel.fromJson(
-  {
-    'timings': {
-      'Fajr': '05:21',
-      'Sunrise': '06:47',
-      'Dhuhr': '12:45',
-      'Asr': '16:10',
-      'Maghrib': '18:43',
-      'Isha': '20:00',
-    },
-    'date': {
-      'hijri': {
-        'day': '18',
-        'month': {'ar': 'ربيع الثاني'},
-        'year': '1448',
-      },
-    },
-  },
-  date: DateTime(2026, 9, 29),
-  location: PrayerLocation.cairo,
-);
+/// 16:00 in Cairo on 29 Sep 2026: Asr (16:10) is next. A moment, so the
+/// test does not depend on the machine's time zone.
+DateTime _clock() => cairo(9, 29, 16);
 
 void main() {
   late MockHomeCubit home;
@@ -76,7 +54,10 @@ void main() {
       ),
     );
     when(() => prayer.state).thenReturn(
-      PrayerTimesState(status: PrayerTimesStatus.success, times: _times()),
+      PrayerTimesState(
+        status: PrayerTimesStatus.success,
+        times: cairoTimes(9, 29),
+      ),
     );
     when(() => prayer.load()).thenAnswer((_) async {});
   });
@@ -103,6 +84,21 @@ void main() {
         GoRoute(
           path: AppRoutes.quran,
           builder: (_, _) => const Scaffold(body: Text('QURAN PAGE')),
+        ),
+        GoRoute(
+          path: AppRoutes.prayer,
+          builder: (_, state) =>
+              Scaffold(body: Text('PRAYER ${state.uri.query}')),
+          routes: [
+            GoRoute(
+              path: 'settings',
+              builder: (_, _) => const Scaffold(body: Text('PRAYER SETTINGS')),
+            ),
+            GoRoute(
+              path: 'monthly',
+              builder: (_, _) => const Scaffold(body: Text('PRAYER MONTHLY')),
+            ),
+          ],
         ),
       ],
     );
@@ -173,7 +169,7 @@ void main() {
       await pump(tester, _desktop);
 
       expect(find.text('00 : 10 : 00'), findsOneWidget);
-      expect(find.text('04:10 PM'), findsOneWidget);
+      expect(find.text('04:10 م'), findsOneWidget);
       // "العصر" appears in the list and as the next prayer.
       expect(find.text('العصر'), findsNWidgets(2));
 
@@ -209,10 +205,45 @@ void main() {
     testWidgets('sections that are not built yet say so', (tester) async {
       await pump(tester, _desktop);
 
-      await tester.tap(find.text('اعرف اتجاه القبلة'));
+      await tester.tap(find.text('أذكاري اليومية'));
       await tester.pump();
 
       expect(find.text('قريبًا إن شاء الله'), findsOneWidget);
+    });
+
+    testWidgets('the prayer and qibla shortcuts open the prayer section', (
+      tester,
+    ) async {
+      await pump(tester, _desktop);
+      await tester.tap(find.text('مواقيت الصلاة والأذان'));
+      await tester.pumpAndSettle();
+      expect(find.text('PRAYER '), findsOneWidget);
+
+      await pump(tester, _desktop);
+      await tester.tap(find.text('اعرف اتجاه القبلة'));
+      await tester.pumpAndSettle();
+      expect(find.text('PRAYER section=qibla'), findsOneWidget);
+    });
+
+    testWidgets('the prayer card pills open settings and the month', (
+      tester,
+    ) async {
+      await pump(tester, _desktop);
+      await tester.tap(find.text('القاهرة، مصر'));
+      await tester.pumpAndSettle();
+      expect(find.text('PRAYER SETTINGS'), findsOneWidget);
+
+      await pump(tester, _desktop);
+      await tester.tap(find.text('التقويم الهجري'));
+      await tester.pumpAndSettle();
+      expect(find.text('PRAYER MONTHLY'), findsOneWidget);
+    });
+
+    testWidgets('the navigation bar opens the prayer section', (tester) async {
+      await pump(tester, _desktop);
+      await tester.tap(find.text('الصلاة').first);
+      await tester.pumpAndSettle();
+      expect(find.text('PRAYER '), findsOneWidget);
     });
 
     testWidgets('copying the hadith puts it on the clipboard', (tester) async {

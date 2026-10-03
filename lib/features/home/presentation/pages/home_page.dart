@@ -11,25 +11,22 @@ import 'package:manara/features/home/presentation/widgets/prayer_times_card.dart
 import 'package:manara/features/home/presentation/widgets/quick_access_section.dart';
 import 'package:manara/features/home/presentation/widgets/reading_journey_card.dart';
 import 'package:manara/features/home/presentation/widgets/treasures_section.dart';
-import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => getIt<HomeCubit>()..load()),
-        BlocProvider(create: (_) => getIt<PrayerTimesCubit>()..load()),
-      ],
+    // PrayerTimesCubit is provided above the router (see ManaraApp).
+    return BlocProvider(
+      create: (_) => getIt<HomeCubit>()..load(),
       child: const HomeView(),
     );
   }
 }
 
 /// Home layout from Figma "Desktop - 1". Expects [HomeCubit] and
-/// [PrayerTimesCubit] above it.
+/// `PrayerTimesCubit` above it.
 class HomeView extends StatelessWidget {
   const HomeView({this.clock = DateTime.now, super.key});
 

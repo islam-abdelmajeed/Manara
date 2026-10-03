@@ -3,6 +3,7 @@ abstract final class AppImages {
   static const String _base = 'assets/images';
   static const String _home = '$_base/home';
   static const String _quran = '$_base/quran';
+  static const String _prayer = '$_base/prayer';
 
   /// Lantern logo (Figma component "لوجو"), exported at 4x.
   static const String logo = '$_base/logo.png';
@@ -28,4 +29,8 @@ abstract final class AppImages {
   // Quran index (Figma "Desktop - 4"). Captured from the design canvas on
   // the card color, since the file's image fills could not be exported.
   static const String dailyWirdFlower = '$_quran/daily_wird_flower.webp';
+
+  // Prayer times (Figma "الصلاة - موافيت و قبلة", node 2124:2457), cropped
+  // to the frame's visible area.
+  static const String prayerMosque = '$_prayer/mosque.webp';
 }

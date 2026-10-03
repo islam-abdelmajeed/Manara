@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:manara/core/error/failures.dart';
 import 'package:manara/core/usecases/usecase.dart';
+import 'package:manara/core/utils/arabic_search.dart';
 import 'package:manara/features/quran/domain/entities/reader_progress.dart';
 import 'package:manara/features/quran/domain/usecases/get_mushaf_page.dart';
 import 'package:manara/features/quran/domain/usecases/get_surahs.dart';
 import 'package:manara/features/quran/domain/usecases/reader_progress_usecases.dart';
 import 'package:manara/features/quran/presentation/cubit/quran_index_cubit.dart';
-import 'package:manara/features/quran/presentation/utils/arabic_search.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../helpers/quran_fixtures.dart';

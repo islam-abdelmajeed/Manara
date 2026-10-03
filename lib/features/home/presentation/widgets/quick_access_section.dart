@@ -43,12 +43,14 @@ class QuickAccessSection extends StatelessWidget {
       'اعرف اتجاه القبلة',
       AppImages.quickQibla,
       Size(228, 196),
+      AppRoutes.qibla,
     ),
     _QuickItem(
       'الصلاة',
       'مواقيت الصلاة والأذان',
       AppImages.quickPrayer,
       Size(236, 194),
+      AppRoutes.prayer,
     ),
     _QuickItem(
       'الأذكار',

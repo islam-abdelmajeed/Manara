@@ -36,10 +36,10 @@ class AppFooter extends StatelessWidget {
       _FooterLink('المحفوظات'),
     ]),
     _FooterColumn('العبادات', [
-      _FooterLink('الصلاة'),
+      _FooterLink('الصلاة', AppRoutes.prayer),
       _FooterLink('الأذكار'),
       _FooterLink('التسبيح'),
-      _FooterLink('القبلة'),
+      _FooterLink('القبلة', AppRoutes.qibla),
       _FooterLink('رمضان'),
     ]),
     _FooterColumn('المحتوى', [

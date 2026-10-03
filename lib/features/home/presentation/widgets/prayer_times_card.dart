@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:manara/core/router/app_routes.dart';
 import 'package:manara/core/theme/theme.dart';
 import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_times.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
+import 'package:manara/features/prayer/presentation/utils/prayer_format.dart';
 
 /// Prayer times card. At design width the Figma artwork (panels and mosque)
 /// is the background and the content sits on its panels; on narrow screens
@@ -34,6 +37,12 @@ class _PrayerTimesCardState extends State<PrayerTimesCard> {
     super.initState();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => _now = widget.clock());
+      // The cubit reloads at the location's midnight; this catches a timer
+      // that was held up while the app was in the background.
+      final times = context.read<PrayerTimesCubit>().state.times;
+      if (times != null && !_now.isBefore(times.tomorrow.start)) {
+        unawaited(context.read<PrayerTimesCubit>().refreshIfStale());
+      }
     });
   }
 
@@ -71,19 +80,21 @@ class _PrayerData {
 
   PrayerTimes? get times => state.times;
 
+  String get locationLabel => state.location.label;
+
   NextPrayer? get next => times?.nextPrayer(now);
 
   bool get failed => state.status == PrayerTimesStatus.failure && times == null;
 
   String timeOf(Prayer prayer) {
     final t = times;
-    return t == null ? '--:--' : formatClock(t.timeOf(prayer));
+    return t == null ? '--:--' : PrayerFormat.clock(t.timeOf(prayer));
   }
 
   String get countdown {
     final n = next;
     if (n == null) return '-- : -- : --';
-    final left = n.time.difference(now);
+    final left = n.time.instant.difference(now);
     final safe = left.isNegative ? Duration.zero : left;
     String two(int v) => v.toString().padLeft(2, '0');
     return '${two(safe.inHours)} : ${two(safe.inMinutes % 60)} : '
@@ -93,14 +104,8 @@ class _PrayerData {
   String get nextTime {
     final n = next;
     if (n == null) return '--:--';
-    return '${formatClock(n.time)} ${n.time.hour < 12 ? 'AM' : 'PM'}';
-  }
-
-  /// 12-hour `hh:mm`, as in the design.
-  static String formatClock(DateTime t) {
-    final hour = t.hour % 12 == 0 ? 12 : t.hour % 12;
-    return '${hour.toString().padLeft(2, '0')}:'
-        '${t.minute.toString().padLeft(2, '0')}';
+    // ص/م like the prayer section (the design has AM/PM).
+    return PrayerFormat.clockWithPeriod(n.time);
   }
 }
 
@@ -185,8 +190,8 @@ class _DesignLayout extends StatelessWidget {
               height: 35,
               child: _Pill(
                 icon: AppIcons.markerPin,
-                label: data.times?.locationLabel ?? 'القاهرة، مصر',
-                onTap: () => showComingSoon(context),
+                label: data.locationLabel,
+                onTap: () => context.go(AppRoutes.prayerSettings),
               ),
             ),
             Positioned(
@@ -264,8 +269,8 @@ class _CompactLayout extends StatelessWidget {
                     height: 40,
                     child: _Pill(
                       icon: AppIcons.markerPin,
-                      label: data.times?.locationLabel ?? 'القاهرة، مصر',
-                      onTap: () => showComingSoon(context),
+                      label: data.locationLabel,
+                      onTap: () => context.go(AppRoutes.prayerSettings),
                     ),
                   ),
                 ),
@@ -375,11 +380,7 @@ class _NextPrayer extends StatelessWidget {
           children: [
             const AppIcon(AppIcons.sun, size: 30, color: _Style.accent),
             const SizedBox(width: 18),
-            Text(
-              data.nextTime,
-              textDirection: TextDirection.ltr,
-              style: _Style.nextTime,
-            ),
+            Text(data.nextTime, style: _Style.nextTime),
           ],
         ),
       ],
@@ -431,17 +432,14 @@ class _HijriPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Pill(
-      icon: AppIcons.calendar,
-      label: 'التقويم الهجري',
-      onTap: () {
-        final hijri = data.times?.hijriDate;
-        if (hijri == null) {
-          showComingSoon(context);
-        } else {
-          showAppToast(context, 'اليوم $hijri');
-        }
-      },
+    final hijri = data.times?.hijriDate;
+    return Semantics(
+      label: hijri == null ? null : 'التقويم الهجري، اليوم $hijri',
+      child: _Pill(
+        icon: AppIcons.calendar,
+        label: 'التقويم الهجري',
+        onTap: () => context.go(AppRoutes.prayerMonthly),
+      ),
     );
   }
 }
