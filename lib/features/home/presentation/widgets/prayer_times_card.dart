@@ -8,6 +8,7 @@ import 'package:manara/core/theme/theme.dart';
 import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_times.dart';
 import 'package:manara/features/prayer/presentation/cubit/prayer_times_cubit.dart';
+import 'package:manara/features/prayer/presentation/utils/prayer_format.dart';
 
 /// Prayer times card. At design width the Figma artwork (panels and mosque)
 /// is the background and the content sits on its panels; on narrow screens
@@ -87,7 +88,7 @@ class _PrayerData {
 
   String timeOf(Prayer prayer) {
     final t = times;
-    return t == null ? '--:--' : formatClock(t.timeOf(prayer).local);
+    return t == null ? '--:--' : PrayerFormat.clock(t.timeOf(prayer));
   }
 
   String get countdown {
@@ -103,15 +104,8 @@ class _PrayerData {
   String get nextTime {
     final n = next;
     if (n == null) return '--:--';
-    final local = n.time.local;
-    return '${formatClock(local)} ${local.hour < 12 ? 'AM' : 'PM'}';
-  }
-
-  /// 12-hour `hh:mm` of a location wall-clock time, as in the design.
-  static String formatClock(DateTime t) {
-    final hour = t.hour % 12 == 0 ? 12 : t.hour % 12;
-    return '${hour.toString().padLeft(2, '0')}:'
-        '${t.minute.toString().padLeft(2, '0')}';
+    // ص/م like the prayer section (the design has AM/PM).
+    return PrayerFormat.clockWithPeriod(n.time);
   }
 }
 
@@ -386,11 +380,7 @@ class _NextPrayer extends StatelessWidget {
           children: [
             const AppIcon(AppIcons.sun, size: 30, color: _Style.accent),
             const SizedBox(width: 18),
-            Text(
-              data.nextTime,
-              textDirection: TextDirection.ltr,
-              style: _Style.nextTime,
-            ),
+            Text(data.nextTime, style: _Style.nextTime),
           ],
         ),
       ],

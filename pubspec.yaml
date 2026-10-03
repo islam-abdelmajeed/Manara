@@ -76,6 +76,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/home/
+    - assets/images/prayer/
     - assets/images/quran/
     - assets/icons/
     - assets/data/

@@ -74,6 +74,13 @@ void main() {
       expect(egypt, hasLength(27));
     });
 
+    test('Jerusalem is "القدس" under Palestine (owner decision)', () async {
+      final quds = (await cities()).where((c) => c.id == 7303419).single;
+      expect(quds.name, 'القدس');
+      expect(quds.countryCode, 'PS');
+      expect(quds.country, 'فلسطين');
+    });
+
     test('is read from the bundle once', () async {
       await cities();
       await cities();

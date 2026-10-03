@@ -15,7 +15,7 @@ class TodayPanel extends StatelessWidget {
 
   final DateTime now;
 
-  /// Figma: list 450 wide, countdown column, illustration (576 × 452).
+  /// Figma: list 450 wide, countdown column, mosque illustration.
   static const Size designSize = Size(PrayerLayout.contentWidth, 452);
 
   @override
@@ -48,6 +48,7 @@ class TodayPanel extends StatelessWidget {
     return DesignBox(
       size: designSize,
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
           Positioned(
             left: 0,
@@ -61,14 +62,19 @@ class TodayPanel extends StatelessWidget {
             width: 284,
             child: _NextPrayer(next: next, now: now),
           ),
-          // Figma's mosque illustration (576 × 452) goes here once it is
-          // exported; the space is kept so the layout matches.
-          const Positioned(
-            left: 786,
-            top: 0,
-            width: 576,
-            height: 452,
-            child: SizedBox.shrink(),
+          // Figma node 2124:2457: 593 × 465, 16 above the first row. Its
+          // transparent top and ground shadow reach a few pixels past the
+          // box, hence Clip.none.
+          Positioned(
+            left: 769,
+            top: -8,
+            width: 593,
+            height: 465,
+            child: Image.asset(
+              AppImages.prayerMosque,
+              fit: BoxFit.fill,
+              excludeFromSemantics: true,
+            ),
           ),
         ],
       ),

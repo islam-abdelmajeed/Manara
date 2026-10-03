@@ -59,6 +59,7 @@ NAME_OVERRIDES = {
     1282027: 'ماليه',
     1221874: 'دوشنبه',
     4140963: 'واشنطن',
+    7303419: 'القدس',  # (owner's choice) instead of "القدس الشرقية"
 }
 
 COUNTRY_OVERRIDES = {

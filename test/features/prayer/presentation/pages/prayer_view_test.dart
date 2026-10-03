@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manara/core/router/app_routes.dart';
+import 'package:manara/core/theme/app_images.dart';
 import 'package:manara/core/theme/app_theme.dart';
 import 'package:manara/core/widgets/widgets.dart';
 import 'package:manara/features/prayer/domain/entities/prayer_location.dart';
@@ -172,6 +173,24 @@ void main() {
         ),
         TodayPanel.designSize,
       );
+    });
+
+    testWidgets('shows the mosque at its Figma size on desktop only', (
+      tester,
+    ) async {
+      final mosque = find.byWidgetPredicate(
+        (w) =>
+            w is Image &&
+            w.image is AssetImage &&
+            (w.image as AssetImage).assetName == AppImages.prayerMosque,
+      );
+
+      await pump(tester, _desktop);
+      expect(mosque, findsOneWidget);
+      expect(tester.getSize(mosque), const Size(593, 465));
+
+      await pump(tester, _mobile);
+      expect(mosque, findsNothing);
     });
 
     testWidgets('lists the six times and counts down to Asr', (tester) async {

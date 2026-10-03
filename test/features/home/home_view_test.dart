@@ -169,7 +169,7 @@ void main() {
       await pump(tester, _desktop);
 
       expect(find.text('00 : 10 : 00'), findsOneWidget);
-      expect(find.text('04:10 PM'), findsOneWidget);
+      expect(find.text('04:10 م'), findsOneWidget);
       // "العصر" appears in the list and as the next prayer.
       expect(find.text('العصر'), findsNWidgets(2));
 
